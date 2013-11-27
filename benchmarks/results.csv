@@ -1,0 +1,98 @@
+name,date,error,count,cycles,hz
+"test-conduct-w-10-routes","Fri Nov 22 2013 00:23:23 GMT+0000 (GMT)",,66516,7,1319583.4610304106
+"Register 10 routes","Fri Nov 22 2013 00:34:41 GMT+0000 (GMT)",,895,3,12691.811197892244
+"Register 10 routes with Component/Router","Sat Nov 23 2013 18:15:14 GMT+0000 (GMT)",,872,3,12523.001890357482
+"Register 10 routes with Conduct","Sat Nov 23 2013 18:15:20 GMT+0000 (GMT)",,127,3,1843.2632334050838
+"<Test #1>","Sat Nov 23 2013 18:25:51 GMT+0000 (GMT)",Error: The test "<Test #1>" is empty. This may be the result of dead code removal.,0,0,0
+"d","Sat Nov 23 2013 18:26:12 GMT+0000 (GMT)",Error: The test "d" is empty. This may be the result of dead code removal.,0,0,0
+"Register one route","Sat Nov 23 2013 18:27:09 GMT+0000 (GMT)",Error: The test "Register one route" is empty. This may be the result of dead code removal.,0,0,0
+"with Component/Router","Sat Nov 23 2013 18:28:58 GMT+0000 (GMT)",,8565,4,120649.76914896365
+"with Conduct Router","Sat Nov 23 2013 18:29:03 GMT+0000 (GMT)",,1288,3,19005.102473230152
+"with Component/Router","Sat Nov 23 2013 19:28:34 GMT+0000 (GMT)",,8359,4,121727.80231991403
+"with Conduct Router","Sat Nov 23 2013 19:28:39 GMT+0000 (GMT)",,1311,4,19318.442673389884
+"with Component/Router","Sat Nov 23 2013 19:28:55 GMT+0000 (GMT)",,8863,4,118876.27401550343
+"with Conduct Router","Sat Nov 23 2013 19:29:01 GMT+0000 (GMT)",,1292,4,19860.915718159205
+"with Component/Router","Sat Nov 23 2013 19:29:06 GMT+0000 (GMT)",,45818,6,895195.4222857708
+"with Conduct Router","Sat Nov 23 2013 19:29:06 GMT+0000 (GMT)",ReferenceError: testObj is not defined,0,0,0
+"with Component/Router","Sat Nov 23 2013 19:30:05 GMT+0000 (GMT)",,8402,4,124512.60579534943
+"with Conduct Router","Sat Nov 23 2013 19:30:10 GMT+0000 (GMT)",,1310,3,16959.8096927997
+"with Component/Router","Sat Nov 23 2013 19:30:16 GMT+0000 (GMT)",,42357,6,830709.6860606405
+"with Conduct Router","Sat Nov 23 2013 19:30:16 GMT+0000 (GMT)",ReferenceError: testObj is not defined,0,0,0
+"with Component/Router","Sat Nov 23 2013 19:31:16 GMT+0000 (GMT)",,45017,5,844259.7351625266
+"with Conduct Router","Sat Nov 23 2013 19:31:16 GMT+0000 (GMT)",ReferenceError: testObj is not defined,0,0,0
+"with Component/Router","Sat Nov 23 2013 19:31:39 GMT+0000 (GMT)",,52271,5,920228.4856858336
+"with Conduct Router","Sat Nov 23 2013 19:31:39 GMT+0000 (GMT)",ReferenceError: testObj is not defined,0,0,0
+"with Component/Router","Sat Nov 23 2013 19:34:01 GMT+0000 (GMT)",,43139,6,829817.9133868346
+"with Conduct Router","Sat Nov 23 2013 19:34:01 GMT+0000 (GMT)",ReferenceError: testObj is not defined,0,0,0
+"with Component/Router","Sat Nov 23 2013 21:46:19 GMT+0000 (GMT)",,46381,6,902638.9792009257
+"with Conduct Router","Sat Nov 23 2013 21:46:25 GMT+0000 (GMT)",,44999365,5,614514270.0001135
+"with Component/Router","Sat Nov 23 2013 21:46:52 GMT+0000 (GMT)",,47611,8,917549.7690284002
+"with Conduct Router","Sat Nov 23 2013 21:46:52 GMT+0000 (GMT)",ReferenceError: testObj is not defined,0,0,0
+"with Component/Router","Sat Nov 23 2013 21:52:52 GMT+0000 (GMT)",,49910,5,961034.6224498092
+"with Conduct Router","Sat Nov 23 2013 21:52:57 GMT+0000 (GMT)",,87588,7,1723844.8381670497
+"with Component/Router","Sat Nov 23 2013 21:53:41 GMT+0000 (GMT)",,46793,6,901000.0529025329
+"with Conduct Router","Sat Nov 23 2013 21:53:47 GMT+0000 (GMT)",,126510,6,2407667.9619453023
+"with Component/Router","Sun Nov 24 2013 00:06:39 GMT+0000 (GMT)",,45978,6,869967.5233933773
+"with Conduct Router","Sun Nov 24 2013 00:06:45 GMT+0000 (GMT)",,85042,7,1671078.733193921
+"with Component/Router","Sun Nov 24 2013 00:40:43 GMT+0000 (GMT)",,48231,5,933693.0244002362
+"with Conduct Router","Sun Nov 24 2013 00:40:43 GMT+0000 (GMT)",ReferenceError: testObj is not defined,0,0,0
+"with Component/Router","Sun Nov 24 2013 00:47:51 GMT+0000 (GMT)",,50244,6,966975.1704711978
+"with Conduct Router","Sun Nov 24 2013 00:47:57 GMT+0000 (GMT)",,39646,8,771112.8468813478
+"with Component/Router","Sun Nov 24 2013 00:51:08 GMT+0000 (GMT)",,17673,5,338573.8848674149
+"with Conduct Router","Sun Nov 24 2013 00:51:14 GMT+0000 (GMT)",,35072,6,677972.4793381891
+"with Component/Router","Sun Nov 24 2013 00:52:16 GMT+0000 (GMT)",,8815,4,125758.26794333966
+"with Conduct Router","Sun Nov 24 2013 00:52:22 GMT+0000 (GMT)",,1303,3,18851.673125622085
+"with Component/Router","Sun Nov 24 2013 00:52:28 GMT+0000 (GMT)",,15374,6,303367.4582463301
+"with Conduct Router","Sun Nov 24 2013 00:52:33 GMT+0000 (GMT)",,35423,6,693487.6893248111
+"with Component/Router","Sun Nov 24 2013 15:34:02 GMT+0000 (GMT)",,8730,4,120264.26792471427
+"with Conduct Router","Sun Nov 24 2013 15:34:08 GMT+0000 (GMT)",,1179,4,18427.953443963266
+"with Component/Router","Sun Nov 24 2013 15:34:13 GMT+0000 (GMT)",,16462,6,323054.0859767906
+"with Conduct Router","Sun Nov 24 2013 15:34:19 GMT+0000 (GMT)",,32401,6,636627.4569059546
+"with Component/Router","Sun Nov 24 2013 21:27:28 GMT+0000 (GMT)",,8522,4,124190.89731788401
+"with Conduct Router","Sun Nov 24 2013 21:27:34 GMT+0000 (GMT)",,1163,3,16406.857764022698
+"with Component/Router","Sun Nov 24 2013 21:27:39 GMT+0000 (GMT)",,15920,3,312367.4225357489
+"with Conduct Router","Sun Nov 24 2013 21:27:45 GMT+0000 (GMT)",,32727,6,642824.2641613173
+"with Component/Router","Sun Nov 24 2013 21:28:04 GMT+0000 (GMT)",,9888,4,121176.06990066438
+"with Conduct Router","Sun Nov 24 2013 21:28:10 GMT+0000 (GMT)",,1176,4,17456.91612840664
+"with Component/Router","Sun Nov 24 2013 21:28:16 GMT+0000 (GMT)",,15885,8,309322.48992686055
+"with Conduct Router","Sun Nov 24 2013 21:28:21 GMT+0000 (GMT)",,31510,4,620759.9903908584
+"with Component/Router","Tue Nov 26 2013 00:21:44 GMT+0000 (GMT)",,8814,4,121512.92321317577
+"with Conduct Router","Tue Nov 26 2013 00:21:50 GMT+0000 (GMT)",,1218,4,17805.89903725439
+"with Component/Router","Tue Nov 26 2013 00:21:55 GMT+0000 (GMT)",,16555,3,325498.77238142403
+"with Conduct Router","Tue Nov 26 2013 00:22:01 GMT+0000 (GMT)",,27976,7,544875.8283013079
+"with Component/Router","Tue Nov 26 2013 00:29:00 GMT+0000 (GMT)",,8680,4,124797.10029435503
+"with Conduct Router","Tue Nov 26 2013 00:29:06 GMT+0000 (GMT)",,904,5,14137.46425349632
+"with Component/Router","Tue Nov 26 2013 00:29:12 GMT+0000 (GMT)",,15952,11,311782.71786028566
+"with Conduct Router","Tue Nov 26 2013 00:29:17 GMT+0000 (GMT)",,29722,6,562483.449018142
+"with Component/Router","Tue Nov 26 2013 00:30:03 GMT+0000 (GMT)",,8867,5,119235.73089151019
+"with Conduct Router","Tue Nov 26 2013 00:30:09 GMT+0000 (GMT)",,887,4,11691.066690028993
+"with Component/Router","Tue Nov 26 2013 00:30:14 GMT+0000 (GMT)",,16673,8,304776.0155663201
+"with Conduct Router","Tue Nov 26 2013 00:30:20 GMT+0000 (GMT)",,30197,4,579592.4376077082
+"with Component/Router","Tue Nov 26 2013 00:30:50 GMT+0000 (GMT)",,8675,4,126678.91189322856
+"with Conduct Router","Tue Nov 26 2013 00:30:56 GMT+0000 (GMT)",,962,5,13690.942443860458
+"with Component/Router","Tue Nov 26 2013 00:31:01 GMT+0000 (GMT)",,16891,6,315436.6352878242
+"with Conduct Router","Tue Nov 26 2013 00:31:07 GMT+0000 (GMT)",,29173,5,551380.1651701888
+"with Component/Router","Tue Nov 26 2013 22:27:29 GMT+0000 (GMT)",,8580,4,106176.849999506
+"with Conduct Router","Tue Nov 26 2013 22:27:34 GMT+0000 (GMT)",,923,5,11097.317014846356
+"with Component/Router","Tue Nov 26 2013 22:27:40 GMT+0000 (GMT)",,16162,5,306659.52226857387
+"with Conduct Router","Tue Nov 26 2013 22:27:45 GMT+0000 (GMT)",,31530,6,484215.42220668675
+"with Component/Router","Tue Nov 26 2013 23:45:17 GMT+0000 (GMT)",,8304,5,109058.28672891973
+"with Conduct Router","Tue Nov 26 2013 23:45:23 GMT+0000 (GMT)",,894,5,11864.657355321388
+"with Component/Router","Tue Nov 26 2013 23:45:29 GMT+0000 (GMT)",,17160,6,300713.39752529765
+"with Conduct Router","Tue Nov 26 2013 23:45:34 GMT+0000 (GMT)",,28309,4,503661.9139700639
+"with Component/Router","Wed Nov 27 2013 00:28:11 GMT+0000 (GMT)",,10088,7,198046.27781442375
+"with Conduct Router","Wed Nov 27 2013 00:28:17 GMT+0000 (GMT)",,452,4,7494.88467467923
+"with Component/Router","Wed Nov 27 2013 00:28:22 GMT+0000 (GMT)",,17142,3,328424.78866901004
+"with Conduct Router","Wed Nov 27 2013 00:28:27 GMT+0000 (GMT)",,31800,4,615736.2709867626
+"with Component/Router","Wed Nov 27 2013 00:33:27 GMT+0000 (GMT)",,9450,3,124216.71911535265
+"with Conduct Router","Wed Nov 27 2013 00:33:32 GMT+0000 (GMT)",,1215,4,17895.42833596689
+"with Component/Router","Wed Nov 27 2013 00:33:38 GMT+0000 (GMT)",,15711,5,285219.2073484746
+"with Conduct Router","Wed Nov 27 2013 00:33:44 GMT+0000 (GMT)",,30227,7,590271.625567928
+"with Component/Router","Wed Nov 27 2013 21:42:26 GMT+0000 (GMT)",,9859,5,113057.0788942891
+"with Conduct Router","Wed Nov 27 2013 21:42:31 GMT+0000 (GMT)",,1189,5,16246.867367588968
+"with Component/Router","Wed Nov 27 2013 21:42:37 GMT+0000 (GMT)",,16729,6,326970.63672513294
+"with Conduct Router","Wed Nov 27 2013 21:42:42 GMT+0000 (GMT)",,33248,8,650578.105683138
+"with Component/Router","Wed Nov 27 2013 22:43:19 GMT+0000 (GMT)",,10033,5,125599.20387267199
+"with Conduct Router","Wed Nov 27 2013 22:43:25 GMT+0000 (GMT)",,1205,5,17521.523288231518
+"with Component/Router","Wed Nov 27 2013 22:43:30 GMT+0000 (GMT)",,15776,3,282595.06877372257
+"with Conduct Router","Wed Nov 27 2013 22:43:36 GMT+0000 (GMT)",,30086,6,577971.848496752

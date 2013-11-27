@@ -1,0 +1,35 @@
+{
+  "name": "conduct",
+  "description": "A multi-purpose Router",
+  "version": "0.1.0",
+  "main": "./lib/index.js",
+  "keywords": [
+    "router",
+    "client side"
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "matchdep": "~0.1.2",
+    "grunt-contrib-watch": "~0.4.4",
+    "karma-script-launcher": "~0.1.0",
+    "karma-firefox-launcher": "~0.1.0",
+    "karma-chrome-launcher": "~0.1.0",
+    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-requirejs": "~0.1.0",
+    "karma-jasmine": "~0.1.0",
+    "karma-coffee-preprocessor": "~0.1.0",
+    "karma-phantomjs-launcher": "~0.1.0",
+    "karma": "~0.10.1",
+    "grunt-karma": "~0.6.1",
+    "mocha": "~1.12.0",
+    "karma-mocha": "~0.1.0",
+    "karma-spec-reporter": "0.0.4",
+    "grunt-benchmark": "~0.2.0",
+    "router-component": "git://github.com/component/router",
+    "underscore": "~1.5.2",
+    "grunt-requirejs": "~0.4.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "conduct",
+  "description": "A multi-purpose Router",
+  "version": "0.1.0",
+  "main": "./lib/index.js",
+  "dependencies": {
+    "underscore-amd": "~1.4.4",
+    "data-structures": "~1.4.0"
+  },
+  "devDependencies": {
+    "requirejs": "~2.1.5",
+  },
+  "directory": "components"
+}
