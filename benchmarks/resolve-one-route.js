@@ -1,7 +1,7 @@
 var Router = require('router-component'),
-	Conduct = require('../lib/index'),
+	conduct = require('../lib/conduct'),
 
-	testObj = Conduct.createRouter(),
+	testObj = conduct(),
 	router = new Router;
 
 function noop () {}

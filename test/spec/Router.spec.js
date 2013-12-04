@@ -1,11 +1,11 @@
 define([
-	'Conduct'
-], function (Conduct) {
+	'Router'
+], function (Router) {
 
-	var SEP = '/',
+	var DELIMITER = '/',
 		ROUTE
 
-	describe('Conduct', function () {
+	describe('Router', function () {
 
 		var LOOSE_ROUTES = {
 				':number': sinon.spy(),
@@ -26,7 +26,7 @@ define([
 					'/path3': true
 				};
 
-			var testObj = new Conduct(SEP)
+			var testObj = new Router(DELIMITER)
 
 			before(function () {
 				testObj
@@ -56,7 +56,7 @@ define([
 
 		describe('when dealing with loose routes', function () {
 
-			var testObj = new Conduct(SEP);
+			var testObj = new Router(DELIMITER);
 
 			beforeEach(function () {
 				params = []
@@ -87,7 +87,7 @@ define([
 
 		describe('when dealing with date parts', function () {
 
-			var testObj = new Conduct(SEP);
+			var testObj = new Router(DELIMITER);
 
 			before(function () {
 				testObj.connect(DATE_ROUTES)
@@ -119,7 +119,7 @@ define([
 
 		describe('when dealing with composite routes', function () {
 
-			var testObj = new Conduct(SEP);
+			var testObj = new Router(DELIMITER);
 
 			before(function () {
 				testObj
@@ -161,7 +161,7 @@ define([
 
 		describe('when dealing with UNION parameters', function () {
 
-			var testObj = new Conduct(SEP);
+			var testObj = new Router(DELIMITER);
 
 			before(function () {
 				testObj
@@ -197,7 +197,7 @@ define([
 
 		describe('when dealing with', function () {
 
-			var testObj = new Conduct(SEP);
+			var testObj = new Router(DELIMITER);
 
 			before(function () {
 				testObj
@@ -223,7 +223,7 @@ define([
 			})
 
 			describe('loose routes registered before and after a more specific route', function () {
-				var testObj = new Conduct(SEP),
+				var testObj = new Router(DELIMITER),
 					LOOSE_ROUTE = 1,
 					LOOSE_3_TOKENS_ROUTE = 2
 					SPECIFIC_3_TOKENS_ROUTE = 3;
@@ -242,7 +242,7 @@ define([
 			})
 
 			describe('interleaved loose routes and specific router', function () {
-				var testObj = new Conduct(SEP),
+				var testObj = new Router(DELIMITER),
 					LOOSE_2_TOKENS_ROUTE = 1,
 					SPECIFIC_2_TOKENS_ROUTE = 2
 					LOOSE_3_TOKENS_ROUTE = 3

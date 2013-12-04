@@ -1,9 +1,8 @@
 define([
 	'createNodeBuilder',
+	'specificity',
 	'Node'
-], function (createNodeBuilder, Node) {
-
-	var NodeSpecificity = Node.Specificity;
+], function (createNodeBuilder, NodeSpecificity, Node) {
 	
 	describe('createNodeBuilder', function () {
 
@@ -23,7 +22,7 @@ define([
 				var node = createNodeBuilder(':array-type', ['work', 'home']).call(),
 					result;
 				
-				result = node.match('work', 0, [])
+				result = node.match('work', [])
 				expect(result).to.be.true
 				expect(node.specificity).to.equal(NodeSpecificity.LOOSE)
 			})
@@ -37,7 +36,7 @@ define([
 					TOKEN = 'token',
 					PARAMS = []
 
-				result = node.match(TOKEN, 0, PARAMS)
+				result = node.match(TOKEN, PARAMS)
 				expect(matcher).to.be.calledWith(TOKEN, PARAMS)
 				expect(node.specificity).to.equal(NodeSpecificity.TIGHT)
 			})	
@@ -50,7 +49,7 @@ define([
 					node = createNodeBuilder(':regexp-type', dummyRegExp).call(),
 					result;
 				
-				result = node.match('pluto', 0, [])
+				result = node.match('pluto', [])
 				expect(result).to.be.true
 				expect(node.specificity).to.equal(NodeSpecificity.LOOSEST)
 			})	

@@ -1,18 +1,20 @@
 var Router = require('router-component'),
-	Conduct = require('../lib/index'),
+	conduct = require('../lib/conduct'),
 
-	testObj = Conduct.createRouter(),
-	router = new Router;
+	testObj = conduct(),
+	router = new Router,
+
+	SEED = 100
 
 
 function noop () {}
 
 function registerOneRoutesWithComponentRouter () {
-	router.get('/user/:id', noop)
+	router.get('/user/'+ Math.random() * SEED +'/:id', noop)
 }
 
 function registerOneRoutesWithConductRouter () {
-	testObj.connect('/user/:number', noop)
+	testObj.connect('/user/'+ Math.random() * SEED +'/:number', noop)
 }
 
 module.exports = {

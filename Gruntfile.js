@@ -10,10 +10,10 @@ module.exports = function (grunt) {
             compile: {
                 options: {
                     baseUrl: './lib',
-                    name: 'index',
+                    name: 'conduct',
                     out: './dist/conduct.js',
-                    almond: true,
-                    wrap: true,
+                    // almond: true,
+                    // wrap: true,
                     optimize: 'none',
                     paths: {
                         'underscore': '../bower_components/underscore-amd/underscore'
@@ -28,7 +28,16 @@ module.exports = function (grunt) {
         karma: {
             options: {
                 configFile: 'karma.conf.js',
-                runnerPort: 9999
+                runnerPort: 9999,
+                files: [
+                  {pattern: 'bower_components/**/*.js', included: false},
+                  {pattern: 'test/spec/**/*.spec.js', included: false},
+                  {pattern: 'lib/{,**/}*.js', included: false},
+
+                  {pattern: 'test/libs/{,**/}*.js', included: false},
+
+                  'test/SpecRunner.js'
+                ]
             },
             continuous: {
                 singleRun: true,
@@ -36,6 +45,20 @@ module.exports = function (grunt) {
             },
             dev: {
                 reporters: 'dots'
+            },
+            single: {
+                reporters: 'dots',
+                options: {
+                    files: [
+                      {pattern: 'bower_components/**/*.js', included: false},
+                      {pattern: 'test/spec/'+ grunt.option('file') +'.spec.js', included: false},
+                      {pattern: 'lib/{,**/}*.js', included: false},
+
+                      {pattern: 'test/libs/{,**/}*.js', included: false},
+
+                      'test/SpecRunner.js'
+                    ]
+                }
             }
         },
 

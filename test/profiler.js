@@ -1,6 +1,6 @@
 requirejs.config({
     //By default load any module IDs from js/lib
-    baseUrl: '../lib',
+    baseUrl: '../dist',
     //except, if the module ID starts with "app",
     //load it from the js/app directory. paths
     //config is relative to the baseUrl, and
@@ -11,12 +11,12 @@ requirejs.config({
     }
 })
 
-require(['index'], function (conduct) {
+require(['conduct'], function (conduct) {
     var router,
         noop = function () {}
 
     for (var i = 0; i < 10000; i++) {
-        router = conduct.createRouter()
+        router = conduct()
         router.connect('/user/:number', noop)
     }
 })
