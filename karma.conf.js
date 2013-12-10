@@ -10,7 +10,28 @@ module.exports = function(config) {
 	// frameworks to use
 	frameworks: ['mocha', 'requirejs'],
 
-
+	// list of files / patterns to load in the browser
+    files: [
+        {
+            pattern: 'bower_components/**/*.js',
+            included: false
+        },
+        {
+            pattern: 'test/spec/**/*.spec.js',
+            included: false
+        },
+        {
+            pattern: 'lib/{,**/}*.js',
+            included: false
+        },
+        {
+            pattern: 'test/libs/{,**/}*.js',
+            included: false
+        },
+    
+        'test/SpecRunner.js'
+    ],
+    
 
 	// test results reporter to use
 	// possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'

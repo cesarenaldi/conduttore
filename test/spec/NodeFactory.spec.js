@@ -15,6 +15,7 @@ define([
 
 		beforeEach(function () {
 			factoryStub.reset()
+			builderStub.reset()
 		})
 
 		describe('when registering a new node factory function', function () {
@@ -37,6 +38,23 @@ define([
 
 				expect(node).to.equal(DUMMY_NODE)
 				expect(factoryStub).to.be.calledWith('value')
+			})
+		})
+
+		describe('when registering an alias for an existing node factory', function () {
+
+			var factorySpy = sinon.spy(),
+				builderStub = sinon.stub().returns(factorySpy),
+				testObj = new NodeFactory(builderStub);
+
+			before(function () {
+				testObj.register(':original', function () {})
+				testObj.register(':alias_for_original', ':original')
+			})
+
+			it('should create the node using the factory for the aliased type', function () {
+				testObj.create(':alias_for_original', 'ciao')
+				expect(factorySpy).to.be.calledWith('ciao');
 			})
 		})
 

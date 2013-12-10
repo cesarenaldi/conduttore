@@ -1,13 +1,14 @@
 define([
-	'Router'
-], function (Router) {
+	'Router',
+	'fixtures/route-handler'
+], function (Router, routeHandler) {
 
-	var DELIMITER = '/',
-		ROUTE
 
 	describe('Router', function () {
 
 		var LOOSE_ROUTES = {
+				':text': sinon.spy(),
+				':alphanumeric': sinon.spy(),
 				':number': sinon.spy(),
 				'*': sinon.spy()
 			},
@@ -26,7 +27,7 @@ define([
 					'/path3': true
 				};
 
-			var testObj = new Router(DELIMITER)
+			var testObj = new Router()
 
 			before(function () {
 				testObj
@@ -56,29 +57,43 @@ define([
 
 		describe('when dealing with loose routes', function () {
 
-			var testObj = new Router(DELIMITER);
+			var testObj
 
 			beforeEach(function () {
 				params = []
+				testObj = new Router()
 			})
 
-			before(function () {
-				testObj.connect(LOOSE_ROUTES)
+			it('should support text (i.e. string that use [a-zA-Z0-9_])', function () {
+				testObj.connect(':text', LOOSE_ROUTES[':text'])
+				result = testObj.resolve('/super_califragilistichespiralitoso_2', params)
+				expect(result).to.equal(LOOSE_ROUTES[':text'])
+				expect(params[0]).to.equal('super_califragilistichespiralitoso_2')
 			})
+
+			it('should support alphanumeric strings (i.e. string that use [a-zA-Z0-9])', function () {
+				testObj.connect(':alphanumeric', LOOSE_ROUTES[':alphanumeric'])
+				result = testObj.resolve('/ciano456', params)
+				expect(result).to.equal(LOOSE_ROUTES[':alphanumeric'])
+				expect(params[0]).to.equal('ciano456')
+			})			
 
 			it('should support integers', function () {
+				testObj.connect(':number', LOOSE_ROUTES[':number'])
 				result = testObj.resolve('/1234', params)
 				expect(result).to.equal(LOOSE_ROUTES[':number'])
 				expect(params[0]).to.equal(1234)
 			})
 
 			it('should support decimals', function () {
+				testObj.connect(':number', LOOSE_ROUTES[':number'])
 				result = testObj.resolve('/0.1234', params)
 				expect(result).to.equal(LOOSE_ROUTES[':number'])
 				expect(params[0]).to.equal(0.1234)
 			})
 
 			it('should support loose wildcards', function () {
+				testObj.connect('*', LOOSE_ROUTES['*'])
 				result = testObj.resolve('/paperino-3_1_3', params)
 				expect(result).to.equal(LOOSE_ROUTES['*'])
 				expect(params[0]).to.equal('paperino-3_1_3')
@@ -87,7 +102,7 @@ define([
 
 		describe('when dealing with date parts', function () {
 
-			var testObj = new Router(DELIMITER);
+			var testObj = new Router();
 
 			before(function () {
 				testObj.connect(DATE_ROUTES)
@@ -119,7 +134,7 @@ define([
 
 		describe('when dealing with composite routes', function () {
 
-			var testObj = new Router(DELIMITER);
+			var testObj = new Router();
 
 			before(function () {
 				testObj
@@ -161,7 +176,7 @@ define([
 
 		describe('when dealing with UNION parameters', function () {
 
-			var testObj = new Router(DELIMITER);
+			var testObj = new Router();
 
 			before(function () {
 				testObj
@@ -197,7 +212,7 @@ define([
 
 		describe('when dealing with', function () {
 
-			var testObj = new Router(DELIMITER);
+			var testObj = new Router();
 
 			before(function () {
 				testObj
@@ -223,7 +238,7 @@ define([
 			})
 
 			describe('loose routes registered before and after a more specific route', function () {
-				var testObj = new Router(DELIMITER),
+				var testObj = new Router(),
 					LOOSE_ROUTE = 1,
 					LOOSE_3_TOKENS_ROUTE = 2
 					SPECIFIC_3_TOKENS_ROUTE = 3;
@@ -242,7 +257,7 @@ define([
 			})
 
 			describe('interleaved loose routes and specific router', function () {
-				var testObj = new Router(DELIMITER),
+				var testObj = new Router(),
 					LOOSE_2_TOKENS_ROUTE = 1,
 					SPECIFIC_2_TOKENS_ROUTE = 2
 					LOOSE_3_TOKENS_ROUTE = 3
@@ -261,6 +276,146 @@ define([
 					expect(result).to.equal(SPECIFIC_2_TOKENS_ROUTE, 'expected /users/index route to match')
 				})
 
+			})
+		})
+
+		describe.skip('#alias', function () {
+			it('should have a test', function () {
+				expect(false).to.be.true
+			})
+		})
+
+		describe('when dispatching on a "path"', function () {
+
+			var ROUTE = '/topolino/:number',
+				PATH = '/topolino/123',
+				EXPECTED_PARAM = 123
+
+			it('should return a promise', function () {
+				var testObj = new Router(),
+					promise
+
+				testObj.connect(ROUTE, function () {})
+				promise = testObj.dispatch(PATH)
+				expect(promise).to.have.property('then')
+					.that.is.an.instanceof(Function)
+			})
+
+			it('should reject the promise in case of not found value for the specified path', function (done) {
+				var testObj = new Router()
+				testObj.dispatch('not/matching/path').then(function () {
+					done('Expected to be rejected')
+				}, function (err) {
+					done()
+				})
+			})
+			
+			describe.skip('and the value is a function', function () {
+
+				it('should invoke the function passing the parameters collected', function () {
+					expect(false).to.be.true
+				})
+			})
+
+			describe('and the value is a string', function () {
+
+				var EXISTING_MODULE = 'fixtures/route-handler',
+					testObj = new Router()
+
+				it('should try to load the corresponding module and invoke the function', function (done) {
+					testObj.connect(ROUTE, EXISTING_MODULE)
+					testObj.dispatch(PATH).then(function () {
+						expect(routeHandler).to.be.calledWith(EXPECTED_PARAM)
+						done()
+					}, done)
+				})
+
+				it('should handle missing module rejecting the promise', function (done) {
+					testObj.connect(ROUTE, 'unknown/module')
+
+					testObj.dispatch(PATH).then(function () {
+						done('Expected to be rejected')
+					}, function (err) {
+						done()
+					})
+				})
+
+				it('should handle invalid handler exports rejecting the promise', function (done) {
+					testObj.connect(ROUTE, 'fixtures/invalid-handler-module')
+
+					testObj.dispatch(PATH).then(function () {
+						done('Expected to be rejected')
+					}, function (err) {
+						done()
+					})
+				})
+			})
+
+			describe.skip('and the value is not a function or a string', function () {
+
+				it('should resolve the promise with the found value', function () {
+					expect(false).to.be.true
+				})
+			})
+		})
+
+		describe('when routes are provided in the costructor', function () {
+			
+			it('should support such routes', function (done) {
+				var CONFIG = {
+						routes: {
+							'/user/:number': sinon.spy()
+						}
+					},
+					testObj = new Router(CONFIG)
+				testObj.dispatch('/user/123').then(function () {
+					expect(CONFIG.routes['/user/:number']).to.be.called
+					done()
+				}, done)
+			})
+		})
+
+		describe('when parameter definitions are provided in the costructor', function () {
+			
+			it('should support such parameters', function (done) {
+				var CONFIG = {
+						params: {
+							':dummy': sinon.stub().returns(true)
+						},
+						routes: {
+							'/:dummy': sinon.spy()
+						}
+					},
+					testObj = new Router(CONFIG)
+
+				testObj.dispatch('/dunno').then(function () {
+					expect(CONFIG.routes['/:dummy']).to.be.called
+					done()
+				}, done)
+				
+			})
+		})
+
+		describe('when parameter aliases are provided in the costructor', function () {
+			
+			it('should support such parameters', function (done) {
+				var CONFIG = {
+						aliases: {
+							':alias': ':dummy'
+						},
+						params: {
+							':dummy': sinon.stub().returns(true)
+						},
+						routes: {
+							'/:alias': sinon.spy()
+						}
+					},
+					testObj = new Router(CONFIG)
+
+				testObj.dispatch('/dunno').then(function () {
+					expect(CONFIG.routes['/:alias']).to.be.called
+					done()
+				}, done)
 			})
 		})
 	})

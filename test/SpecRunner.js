@@ -17,8 +17,9 @@ requirejs.config({
     	'sinon': '../test/libs/sinon',
     	'sinon-chai': '../test/libs/sinon-chai',
 
-        'underscore': '../bower_components/underscore-amd/underscore',
-        'data-structures': '../bower_components/data-structures/distribution/browser/data-structures-1.4.0'
+        'fixtures': '../test/fixtures',
+
+        'underscore': '../bower_components/underscore-amd/underscore'
     },
 
     shim: {
@@ -30,7 +31,9 @@ requirejs.config({
         }
     },
 
-    packages: [],
+    packages: [
+        { name: 'when', location: '../bower_components/when', main: 'when' }
+    ],
 
     hbs: {
         disableI18n: true
