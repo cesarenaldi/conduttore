@@ -4,11 +4,11 @@
   "version": "0.1.0",
   "main": "./lib/index.js",
   "dependencies": {
-    "underscore-amd": "~1.4.4",
-    "data-structures": "~1.4.0"
+    "underscore-amd": "~1.4.4"
   },
   "devDependencies": {
     "requirejs": "~2.1.5",
+    "wire": "~0.10.4"
   },
   "directory": "components"
 }
