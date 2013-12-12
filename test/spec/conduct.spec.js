@@ -14,8 +14,8 @@ define([
 				expect(router).to.have.property('connect')
 
 				router.dispatch('/users/edit/topolino')
-				expect(config.routes['/:controller/:action/:type']).to.be.calledOnce//With('users', 'edit', 'topolino')
-				expect(config.routes['*']).to.not.be.called
+				expect(config.routes[0]['/:controller/:action/:type']).to.be.calledOnce//With('users', 'edit', 'topolino')
+				expect(config.routes[1]['*']).to.not.be.called
 
 				done()
 			})

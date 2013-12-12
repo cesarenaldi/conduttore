@@ -27,12 +27,15 @@
     "grunt-benchmark": "~0.2.0",
     "router-component": "git://github.com/component/router",
     "underscore": "~1.5.2",
-    "grunt-requirejs": "~0.4.0"
+    "grunt-requirejs": "~0.4.0",
+    "when": "~2.7.0"
   },
   "engines": {
     "node": ">=0.8.0"
   },
   "dependencies": {
-    "requirejs": "~2.1.9"
+    "requirejs": "~2.1.9",
+    "esprima": "~1.0.4",
+    "ast-traverse": "~0.1.1"
   }
 }

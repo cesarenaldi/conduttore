@@ -1,5 +1,8 @@
 define(['./404'], function (defaultHanlder) {
 
+	function foo () {
+		return 1
+	}
 
 	return {
 		aliases: {

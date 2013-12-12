@@ -6,26 +6,26 @@ define([
 
 	describe('Router', function () {
 
-		var LOOSE_ROUTES = {
-				':text': sinon.spy(),
-				':alphanumeric': sinon.spy(),
-				':number': sinon.spy(),
-				'*': sinon.spy()
-			},
-			DATE_ROUTES = {
-				':yyyy': sinon.spy(),
-				':mm': sinon.spy(),
-				':dd': sinon.spy()
-			},
+		var LOOSE_ROUTES = [
+				{ ':text': sinon.spy() },
+				{ ':alphanumeric': sinon.spy() },
+				{ ':number': sinon.spy() },
+				{ '*': sinon.spy() }
+			],
+			DATE_ROUTES = [
+				{ ':yyyy': sinon.spy() },
+				{ ':mm': sinon.spy() },
+				{ ':dd': sinon.spy() }
+			],
 			result, params
 
 		describe('when registering routes', function () {
 
 			var ONE_ROUTE = '/path1',
-				MULTIPLE_ROUTES = {
-					'/path2': true,
-					'/path3': true
-				};
+				MULTIPLE_ROUTES = [
+					{ '/path2': true },
+					{ '/path3': true }
+				];
 
 			var testObj = new Router()
 
@@ -65,37 +65,37 @@ define([
 			})
 
 			it('should support text (i.e. string that use [a-zA-Z0-9_])', function () {
-				testObj.connect(':text', LOOSE_ROUTES[':text'])
+				testObj.connect(':text', LOOSE_ROUTES[0][':text'])
 				result = testObj.resolve('/super_califragilistichespiralitoso_2', params)
-				expect(result).to.equal(LOOSE_ROUTES[':text'])
+				expect(result).to.equal(LOOSE_ROUTES[0][':text'])
 				expect(params[0]).to.equal('super_califragilistichespiralitoso_2')
 			})
 
 			it('should support alphanumeric strings (i.e. string that use [a-zA-Z0-9])', function () {
-				testObj.connect(':alphanumeric', LOOSE_ROUTES[':alphanumeric'])
+				testObj.connect(':alphanumeric', LOOSE_ROUTES[1][':alphanumeric'])
 				result = testObj.resolve('/ciano456', params)
-				expect(result).to.equal(LOOSE_ROUTES[':alphanumeric'])
+				expect(result).to.equal(LOOSE_ROUTES[1][':alphanumeric'])
 				expect(params[0]).to.equal('ciano456')
 			})			
 
 			it('should support integers', function () {
-				testObj.connect(':number', LOOSE_ROUTES[':number'])
+				testObj.connect(':number', LOOSE_ROUTES[2][':number'])
 				result = testObj.resolve('/1234', params)
-				expect(result).to.equal(LOOSE_ROUTES[':number'])
+				expect(result).to.equal(LOOSE_ROUTES[2][':number'])
 				expect(params[0]).to.equal(1234)
 			})
 
 			it('should support decimals', function () {
-				testObj.connect(':number', LOOSE_ROUTES[':number'])
+				testObj.connect(':number', LOOSE_ROUTES[2][':number'])
 				result = testObj.resolve('/0.1234', params)
-				expect(result).to.equal(LOOSE_ROUTES[':number'])
+				expect(result).to.equal(LOOSE_ROUTES[2][':number'])
 				expect(params[0]).to.equal(0.1234)
 			})
 
 			it('should support loose wildcards', function () {
-				testObj.connect('*', LOOSE_ROUTES['*'])
+				testObj.connect('*', LOOSE_ROUTES[3]['*'])
 				result = testObj.resolve('/paperino-3_1_3', params)
-				expect(result).to.equal(LOOSE_ROUTES['*'])
+				expect(result).to.equal(LOOSE_ROUTES[3]['*'])
 				expect(params[0]).to.equal('paperino-3_1_3')
 			})
 		})
@@ -114,19 +114,19 @@ define([
 
 			it('should support 4 digits years', function () {
 				result = testObj.resolve('/1983', params)
-				expect(result).to.equal(DATE_ROUTES[':yyyy'])
+				expect(result).to.equal(DATE_ROUTES[0][':yyyy'])
 				expect(params[0]).to.equal(1983)
 			})
 
 			it('should support 2 digits months', function () {
 				result = testObj.resolve('/02', params)
-				expect(result).to.equal(DATE_ROUTES[':mm'])
+				expect(result).to.equal(DATE_ROUTES[1][':mm'])
 				expect(params[0]).to.equal(2)
 			})
 
 			it('should support 2 digits days', function () {
 				result = testObj.resolve('/27', params)
-				expect(result).to.equal(DATE_ROUTES[':dd'])
+				expect(result).to.equal(DATE_ROUTES[2][':dd'])
 				expect(params[0]).to.equal(27)
 			})
 		})
@@ -363,13 +363,13 @@ define([
 			
 			it('should support such routes', function (done) {
 				var CONFIG = {
-						routes: {
-							'/user/:number': sinon.spy()
-						}
+						routes: [
+							{ '/user/:number': sinon.spy() }
+						]
 					},
 					testObj = new Router(CONFIG)
 				testObj.dispatch('/user/123').then(function () {
-					expect(CONFIG.routes['/user/:number']).to.be.called
+					expect(CONFIG.routes[0]['/user/:number']).to.be.called
 					done()
 				}, done)
 			})
@@ -382,14 +382,14 @@ define([
 						params: {
 							':dummy': sinon.stub().returns(true)
 						},
-						routes: {
-							'/:dummy': sinon.spy()
-						}
+						routes: [
+							{ '/:dummy': sinon.spy() }
+						]
 					},
 					testObj = new Router(CONFIG)
 
 				testObj.dispatch('/dunno').then(function () {
-					expect(CONFIG.routes['/:dummy']).to.be.called
+					expect(CONFIG.routes[0]['/:dummy']).to.be.called
 					done()
 				}, done)
 				
@@ -406,14 +406,14 @@ define([
 						params: {
 							':dummy': sinon.stub().returns(true)
 						},
-						routes: {
-							'/:alias': sinon.spy()
-						}
+						routes: [
+							{ '/:alias': sinon.spy() }
+						]
 					},
 					testObj = new Router(CONFIG)
 
 				testObj.dispatch('/dunno').then(function () {
-					expect(CONFIG.routes['/:alias']).to.be.called
+					expect(CONFIG.routes[0]['/:alias']).to.be.called
 					done()
 				}, done)
 			})

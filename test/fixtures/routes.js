@@ -9,8 +9,8 @@ define({
 		':type': ['topolino', 'pluto']
 	},
 
-	routes: {
-		'/:controller/:action/:type': sinon.spy(),
-		'*': sinon.spy()
-	}
+	routes: [
+		{ '/:controller/:action/:type': sinon.spy() },
+		{ '*': sinon.spy() }
+	]
 })

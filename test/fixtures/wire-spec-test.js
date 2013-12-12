@@ -1,5 +1,7 @@
-define({
-	route: {
-		module: './route-handler'
+define([], function () {
+	return {
+		route: {
+			module: './route-handler'
+		}
 	}
 })
