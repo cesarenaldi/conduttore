@@ -10,11 +10,13 @@ var Router = require('router-component'),
 function noop () {}
 
 function registerOneRoutesWithComponentRouter () {
-	router.get('/user/'+ Math.random() * SEED +'/:id', noop)
+	for (var i = 0; i < 1000; i++ )
+		router.get('/user/'+ Math.random() * SEED +'/:id', noop)
 }
 
 function registerOneRoutesWithConductRouter () {
-	testObj.connect('/user/'+ Math.random() * SEED +'/:number', noop)
+	for (var i = 0; i < 1000; i++ )
+		testObj.connect('/user/'+ Math.random() * SEED +'/:number', noop)
 }
 
 module.exports = {

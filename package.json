@@ -34,7 +34,6 @@
   "dependencies": {
     "requirejs": "~2.1.9",
     "esprima": "~1.0.4",
-    "ast-traverse": "~0.1.1",
     "underscore": "~1.5.2",
     "when": "~2.7.0",
     "recast": "~0.5.4"

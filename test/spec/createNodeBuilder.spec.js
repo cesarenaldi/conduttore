@@ -13,7 +13,21 @@ define([
 			expect(testCase).to.throw(TypeError)
 		})
 
-		// TODO: verificy spcificity for node creted with forced specificity
+		it('should provide the match function as property of the builder function', function () {
+			var matchFun = function () {},
+				builder = createNodeBuilder(':custom', matchFun)
+
+			expect(builder)
+				.to.have.property('matcher')
+				.that.is.deep.equal(matchFun)
+		})
+
+		describe.skip('when a specificity is provided', function () {
+
+			it('should use that as node specificity', function () {
+				expect(false).to.be.true
+			})
+		})
 
 		describe('when the matcher definition is an array of strings', function () {
 

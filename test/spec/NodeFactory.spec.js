@@ -26,18 +26,22 @@ define([
 			})
 		})
 
-		describe('when creating nodes', function () {			
+		describe('when creating nodes', function () {
+
+			before(function () {
+				builderStub.reset()
+			})		
 
 			it('should invoke factory the corresponding factory function', function () {
-				testObj.create(TYPE, 'ciao')
-				expect( factoryStub ).to.be.calledWith('ciao')
+				testObj.create(TYPE)
+				expect( factoryStub ).to.be.calledOnce
 			})
 
 			it('should create an exact matching node when the requested type is not registered', function () {
 				var node = testObj.create('unknown', 'value')
 
 				expect(node).to.equal(DUMMY_NODE)
-				expect(factoryStub).to.be.calledWith('value')
+				expect(builderStub).to.be.calledWith('unknown', sinon.match.func, sinon.match.number)
 			})
 		})
 
@@ -53,8 +57,8 @@ define([
 			})
 
 			it('should create the node using the factory for the aliased type', function () {
-				testObj.create(':alias_for_original', 'ciao')
-				expect(factorySpy).to.be.calledWith('ciao');
+				testObj.create(':alias_for_original')
+				expect(factorySpy).to.be.calledOnce;
 			})
 		})
 
@@ -65,6 +69,29 @@ define([
 				
 				expect(node).to.equal(DUMMY_NODE)
 				expect(factoryStub).to.be.calledOnce
+			})
+		})
+
+		describe('when restoring a node', function () {
+
+			var factorySpy = sinon.spy(),
+				builderStub = sinon.stub().returns(factorySpy),
+				testObj = new NodeFactory(builderStub),
+
+				nodeToRestore = {
+					type: ':type'
+				}
+
+			before(function () {
+				factorySpy.matcher = function () {}
+				testObj.register(':type', function () {})
+			})
+
+			it('should re-assing the proper match function', function () {
+				testObj.restore(nodeToRestore)
+				expect(nodeToRestore)
+					.to.have.property('match')
+					.that.is.deep.equal(factorySpy.matcher)
 			})
 		})
 	})

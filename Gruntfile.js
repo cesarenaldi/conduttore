@@ -19,7 +19,15 @@ module.exports = function (grunt) {
                         'underscore': '../bower_components/underscore-amd/underscore'
                     },
                     exclude: [
-                        'underscore'
+                        'underscore',
+                        'when'
+                    ],
+                    packages: [
+                        { 
+                            name: 'when',
+                            location: '../bower_components/when',
+                            main: 'when'
+                        }
                     ]
                 }
             },

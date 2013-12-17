@@ -1,4 +1,4 @@
-define(['./404'], function (defaultHanlder) {
+define(['./404'], function (defaultHandler) {
 
 	function foo () {
 		return 1
@@ -14,9 +14,9 @@ define(['./404'], function (defaultHanlder) {
 			':type': ['topolino', 'pluto']
 		},
 
-		routes: {
-			'/:controller/:action/:type': './route-handler',
-			'*': defaultHanlder
-		}
+		routes: [
+			{ '/:controller/:action/:type': './route-handler' },
+			{ '*': defaultHandler }
+		]
 	}
 })

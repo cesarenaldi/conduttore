@@ -35,7 +35,10 @@ define([
 		})
 
 		it('should not match any other string', function () {
-
+			var params = []
+			expect( match('..5', params) ).to.be.false
+			expect( match('1bc', params) ).to.be.false
+			expect( match('abc', params) ).to.be.false
 		})
 	})
 })

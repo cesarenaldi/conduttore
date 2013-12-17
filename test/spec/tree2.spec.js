@@ -227,5 +227,53 @@ define([
             })
 		})
 
+		describe('when exporting/importing the tree structure', function () {
+
+			var X_VALUE = function () {},
+
+				NODE_X = {
+					type: 'node_x',
+					lookup: {},
+					match: sinon.stub(),
+					children: [
+						[], [], []
+					],
+					value: X_VALUE
+				},
+
+				TREE_DATA = {
+					type: 'root-123',
+					lookup: {
+						'node_x': NODE_X
+					},
+					match: function () {},
+					children: [
+						[ NODE_X ], [], []
+					]
+				},
+		
+				nodeFactoryMock = {
+					create: sinon.stub(),
+					createRoot: sinon.stub(),
+					restore: sinon.spy()
+				},
+
+				testObj = createTree(nodeFactoryMock, TREE_DATA)
+
+			it('should export avoiding circular references to be resolved as copies', function () {
+				var tree = testObj.export()
+				expect(tree).to.not.have.property('match')
+				expect(tree.children[0][0]['$ref']).to.equal('$["lookup"]["node_x"]')
+				expect(tree.lookup['node_x']).to.be.an('Object')
+			})
+
+			it('should import restoring the appropriate data structure/match functions', function () {
+				var tree = testObj.export(),
+					newTestObj = createTree(nodeFactoryMock)
+
+				newTestObj.import(tree)
+				expect(nodeFactoryMock.restore).to.be.calledTwice
+			})
+		})
 	})
 })
