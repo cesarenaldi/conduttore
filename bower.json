@@ -4,11 +4,16 @@
   "version": "0.1.0",
   "main": "./lib/index.js",
   "dependencies": {
-    "underscore-amd": "~1.4.4"
+    "underscore-amd": "~1.4.4",
+    "when": "~2.7.0"
   },
   "devDependencies": {
     "requirejs": "~2.1.5",
-    "wire": "~0.10.4"
+    "wire": "~0.10.4",
+    "benchmark": "~1.0.0",
+    "sammy": "~0.7.4",
+    "jquery": "~2.0.3",
+    "director": "~1.2.1"
   },
   "directory": "components"
 }

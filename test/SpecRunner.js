@@ -39,7 +39,6 @@ requirejs.config({
         disableI18n: true
     },
 
-    // ask Require.js to load these files (all our tests)
     deps: ['chai', 'sinon', 'sinon-chai'],
 
     // start test run, once Require.js is done
@@ -52,4 +51,4 @@ requirejs.config({
 
         require(tests, window.__karma__.start)
     }
-});
+})
