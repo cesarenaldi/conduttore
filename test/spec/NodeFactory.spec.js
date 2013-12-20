@@ -1,7 +1,6 @@
 define([
-	'NodeFactory',
-	'Node'
-], function (NodeFactory, Node) {
+	'NodeFactory'
+], function (NodeFactory) {
 
 	var DUMMY_NODE = {},
 		TYPE = ':type';

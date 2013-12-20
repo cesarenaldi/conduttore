@@ -1,128 +1,279 @@
 define([
 	'underscore',
-	'Tree'
-], function (_, Tree) {
+	'tree'
+], function (_, createTree) {
 
-	var TRUTHY_VALUE = true,
-		UNDEFINED_VALUE = undefined,
-		UNDEFINED_LEAF_TYPE = 'pippo',
-
-		rootMock = {
-			insert: sinon.stub(),
-			first: sinon.stub(),
-			value: undefined
-		},
-		nodeMock = {
-			insert: sinon.stub(),
-			first: sinon.stub(),
-			value: UNDEFINED_VALUE
-		},
-		leafMock = {
-			insert: sinon.stub(),
-			first: sinon.stub(),
-			value: TRUTHY_VALUE
-		},
-		nodeFactoryMock = {
-			create: sinon.stub(),
-			createRoot: sinon.stub().returns(rootMock)
-		};
-
-	var ATOMS = [':type1', ':type2']
-
-	nodeFactoryMock.create.withArgs(':root').returns(rootMock)
-
-	_.each(ATOMS, function (atom) {
-		nodeFactoryMock.create.withArgs(atom).returns(nodeMock)	
-	})
 
 	describe('Tree', function () {
 
-		describe('when inserting a new list of atoms', function () {
+		describe('when created', function () {
 
-			var testObj = new Tree(nodeFactoryMock),
-				VALUE = 'value'
+			var EMPTY_ROOT = {
+				type: 'root-456',
+				lookup: {},
+				levels: 0,
+				children: [ [], [], [] ]
+			},
+			
+			nodeFactoryMock = {
+				create: sinon.stub(),
+				createRoot: sinon.stub()
+			}
 
 			before(function () {
-				rootMock.insert.returns(nodeMock)
-				nodeMock.insert.returns(leafMock)
-			});
+				nodeFactoryMock.createRoot.returns(EMPTY_ROOT)
+			})
 
 			beforeEach(function () {
-				rootMock.insert.reset()
+				nodeFactoryMock.createRoot.reset()
+			})
+
+			it('should create a root node if no init data are provided', function () {
+				createTree(nodeFactoryMock)
+				expect(nodeFactoryMock.createRoot).to.be.calledOnce
+			})
+
+			it('should use the init data to pre-populate the tree', function () {
+				createTree(nodeFactoryMock, EMPTY_ROOT)
+				expect(nodeFactoryMock.createRoot).to.not.be.called
+			})
+		})
+
+		describe('when inserting a new list of nodes', function () {
+
+			var ROOT = {
+					type: 'root-456',
+					lookup: {},
+					levels: 0,
+					children: [ [], [], [] ]
+				},
+
+				NODE_A = {
+					type: ':type1',
+					levels: 0,
+					lookup: {},
+					specificity: 0,
+					children: [ [], [], [] ]
+				},
+
+				NODE_B = {
+					type: ':type2',
+					lookup: {},
+					levels: 0,
+					specificity: 1,
+					children: [ [], [], [] ]
+				},
+
+				VALUE = 'value',
+
+				PATH_1 = [':type1', ':type2'],
+
+				PATH_2 = [':type3', ':type4'],
+
+				nodeFactoryMock,
+
+				testObj,
+
+				root, node_1, node_2;
+
+			before(function () {
+				nodeFactoryMock = {
+					create: sinon.stub(),
+					createRoot: sinon.stub()
+				}
+
+				node_1 = _.clone(NODE_A)
+				node_2 = _.clone(NODE_B)
+				root = _.clone(ROOT)
+
+				nodeFactoryMock.createRoot.returns(root)
+				nodeFactoryMock.create.withArgs(':type1').returns(node_1)
+				nodeFactoryMock.create.withArgs(':type2').returns(node_2)
+
+				testObj = createTree(nodeFactoryMock)
+			})
+
+			beforeEach(function () {
 				nodeFactoryMock.create.reset()
 			})
 
-			it('should insert node starting from the root node', function () {
-				testObj.insert(ATOMS, VALUE)
-				expect(rootMock.insert).to.be.calledOnce
-			})
-
-			it('should create a Node for each atom', function () {
-				testObj.insert(ATOMS, VALUE)
+			it('should create a Node for each pattern updating the levels properly', function () {
+				testObj.insert(PATH_1, VALUE)
 				expect(nodeFactoryMock.create).to.be.calledTwice
-				expect(nodeFactoryMock.create.firstCall.args[0]).to.equal(ATOMS[0])
-				expect(nodeFactoryMock.create.secondCall.args[0]).to.equal(ATOMS[1])
-				
-				expect(leafMock.value).to.equal(VALUE)
+				expect(nodeFactoryMock.create.firstCall.args[0]).to.equal(PATH_1[0])
+				expect(nodeFactoryMock.create.secondCall.args[0]).to.equal(PATH_1[1])
+				expect(node_2.value).to.equal(VALUE)
+				expect(root.levels).to.equal(2)
+				expect(node_1.levels).to.equal(1)
+				expect(node_2.levels).to.equal(0)
 			})
 
+			it('should avoid duplication and re-use existing nodes', function () {
+				testObj.insert(PATH_1, 'anothervalue')
+				expect(nodeFactoryMock.create).to.not.be.called
+				expect(node_2.value).to.equal('anothervalue')
+			})
 		})
 
 		describe('when searching a token list', function () {
             
-            var testObj = new Tree(nodeFactoryMock)
+            var Z_VALUE = function () {},
 
-            before(function () {
-            	rootMock.first.returns(nodeMock)
-            	nodeMock.first.withArgs(UNDEFINED_LEAF_TYPE).returns(undefined)
-            	nodeMock.first.returns(leafMock)
-            	rootMock.first.reset()
-            	nodeMock.first.reset()
-            	leafMock.value = TRUTHY_VALUE
-            })
+            	Y_VALUE = function () {},
+
+				NODE_Z = {
+					type: 'leaf',
+					lookup: {},
+					match: sinon.stub(),
+					value: Z_VALUE,
+					children: [ [], [], [] ]
+				},
+
+				NODE_X = {
+					type: 'node_x',
+					lookup: {
+						'leaf': NODE_Z
+					},
+					match: sinon.stub(),
+					children: [
+						[], [ NODE_Z ], []
+					]
+				},
+
+				NODE_Y = {
+					type: 'node_y',
+					lookup: {},
+					match: sinon.stub(),
+					value: Y_VALUE,
+					children: [
+						[], [ ], []
+					]
+				},
+
+				TREE_DATA = {
+					type: 'root-123',
+					lookup: {
+						'node_x': NODE_X,
+						'node_y': NODE_Y
+					},
+					children: [
+						[ NODE_Y ],
+						[ NODE_X ],
+						[]
+					]
+				},
+		
+				nodeFactoryMock = {
+					create: sinon.stub(),
+					createRoot: sinon.stub()
+				},
+
+				testObj = createTree(nodeFactoryMock, TREE_DATA)
+
+			before(function () {
+				NODE_X.match.returns(true)
+				NODE_Y.match.withArgs('ymatch').returns(true)
+				NODE_Y.match.returns(false)
+				NODE_Z.match.returns(true)
+			})
+
+			beforeEach(function () {
+				NODE_X.match.reset()
+				NODE_Y.match.reset()
+				NODE_Z.match.reset()
+			})
             
             it('should walk the tree', function () {
                 var params = [],
-                	tokens = ['topolino'],
+                	tokens = ['xmatch', 'zmatch'],
                 	levels = _.rest(tokens).length
 
                 testObj.search(tokens, params)
-                expect(rootMock.first).to.be.calledWith(tokens[0], levels, params)
+                expect(NODE_Y.match).to.be.calledWith(tokens[0], params)
+                expect(NODE_X.match).to.be.calledWith(tokens[0], params)
+                expect(NODE_Z.match).to.be.calledWith(tokens[1], params)
             })
 
             it('should stop if there is no more tokens', function () {
             	var params = [],
-            		tokens = ['topolino']
+            		tokens = ['xmatch']
 
             	testObj.search(tokens, params)
-            	expect(nodeMock.first).to.not.be.called
+            	expect(NODE_Z.match).to.not.be.called
             })
 
             it('should stop if there is no more nodes', function () {
 				var params = [],
-            		tokens = ['topolino', UNDEFINED_LEAF_TYPE]
+            		tokens = ['ymatch', 'pluto'],
 
-            	testObj.search(tokens, params)
-            	expect(leafMock.first).to.not.be.called
+            		value = testObj.search(tokens, params)
+
+            	expect(value).to.equal(undefined)	
+            	expect(NODE_Y.match).to.be.called
             })
 
             it('should return the value of the found node', function () {
-            	var params = [],
-            		tokens = ['topolino', 'pluto'],
 
-            		value = testObj.search(tokens, params)
+            	var value
 
-            	expect(value).to.equal(TRUTHY_VALUE)
+            	value = testObj.search(['topolino', 'pippo'], [])
+            	expect(value).to.equal(Z_VALUE)
+
+            	value = testObj.search(['ymatch'], [])
+				expect(value).to.equal(Y_VALUE)
+
+				value = testObj.search(['ymatch', 'another'], [])
+				expect(value).to.equal(undefined)
             })
+		})
 
-            it('should return undefined if no paths matches the given tokens', function () {
-				var params = [],
-            		tokens = ['topolino', UNDEFINED_LEAF_TYPE],
+		describe('when exporting/importing the tree structure', function () {
 
-            		value = testObj.search(tokens, params)
+			var X_VALUE = function () {},
 
-            	expect(value).to.equal(undefined)
-            })
+				NODE_X = {
+					type: 'node_x',
+					lookup: {},
+					match: sinon.stub(),
+					children: [
+						[], [], []
+					],
+					value: X_VALUE
+				},
+
+				TREE_DATA = {
+					type: 'root-123',
+					lookup: {
+						'node_x': NODE_X
+					},
+					match: function () {},
+					children: [
+						[ NODE_X ], [], []
+					]
+				},
+		
+				nodeFactoryMock = {
+					create: sinon.stub(),
+					createRoot: sinon.stub(),
+					restore: sinon.spy()
+				},
+
+				testObj = createTree(nodeFactoryMock, TREE_DATA)
+
+			it('should export avoiding circular references to be resolved as copies', function () {
+				var tree = testObj.export()
+				expect(tree).to.not.have.property('match')
+				expect(tree.children[0][0]['$ref']).to.equal('$["lookup"]["node_x"]')
+				expect(tree.lookup['node_x']).to.be.an('Object')
+			})
+
+			it('should import restoring the appropriate data structure/match functions', function () {
+				var tree = testObj.export(),
+					newTestObj = createTree(nodeFactoryMock)
+
+				newTestObj.import(tree)
+				expect(nodeFactoryMock.restore).to.be.calledTwice
+			})
 		})
 	})
 })

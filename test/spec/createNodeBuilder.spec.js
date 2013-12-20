@@ -1,8 +1,7 @@
 define([
 	'createNodeBuilder',
-	'specificity',
-	'Node'
-], function (createNodeBuilder, NodeSpecificity, Node) {
+	'specificity'
+], function (createNodeBuilder, NodeSpecificity) {
 	
 	describe('createNodeBuilder', function () {
 
