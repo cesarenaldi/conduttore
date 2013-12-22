@@ -8,6 +8,8 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 
+		file: grunt.option('file') ? grunt.option('file') : '**/*',
+
 		requirejs: {
 			dist: {
 				options: {
@@ -133,7 +135,7 @@ module.exports = function (grunt) {
 						{pattern: 'bower_components/**/*.js', included: false},
 						{pattern: 'lib/{,**/}*.js', included: false},
 						{pattern: 'dist/*.js', included: false},
-						{pattern: 'test/perf/**/*.perf.js', included: false},
+						{pattern: 'test/perf/<%= file %>.perf.js', included: false},
 
 						'test/PerfRunner.js'
 					]
