@@ -16,9 +16,11 @@ module.exports = function (grunt) {
 					baseUrl: './lib',
 					name: 'conduct',
 					out: './dist/conduct.js',
-					// almond: true,
-					// wrap: true,
-					optimize: 'none',
+					almond: true,
+					wrap: true,
+					optimize: 'uglify2',
+					skipSemiColonInsertion: true,
+					preserveLicenseComments: false,
 					paths: {
 						'underscore': '../bower_components/underscore-amd/underscore'
 					},
@@ -32,7 +34,12 @@ module.exports = function (grunt) {
 							location: '../bower_components/when',
 							main: 'when'
 						}
-					]
+					],
+					onBuildWrite: function (moduleName, path, contents) {
+						return contents
+							.replace("(function(define){ 'use strict';", '')
+							.replace("}(typeof define === 'function' ? define : function(factory) { module.exports = factory(require); }))", '')
+					}
 				}
 			},
 
@@ -41,8 +48,6 @@ module.exports = function (grunt) {
 					baseUrl: './',
 					name: 'conduct!test/fixtures/pre-build-routes',
 					out: '.tmp/routes.js',
-					// almond: true,
-					// wrap: true,
 					optimize: 'none',
 					paths: {
 						'underscore': 'bower_components/underscore-amd/underscore',
