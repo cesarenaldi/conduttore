@@ -118,7 +118,7 @@ module.exports = function (grunt) {
 				options: {
 					files: [
 						{pattern: 'bower_components/**/*.js', included: false},
-						{pattern: 'test/spec/'+ grunt.option('file') +'.spec.js', included: false},
+						{pattern: 'test/spec/<%= file %>.spec.js', included: false},
 						{pattern: 'lib/{,**/}*.js', included: false},
 						{pattern: 'test/fixtures/{,**/}*.js', included: false},
 						{pattern: 'test/libs/{,**/}*.js', included: false},
