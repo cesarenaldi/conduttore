@@ -8,18 +8,23 @@ requirejs.config({
     //the paths config could be for a directory.
     paths: {
         'underscore': '../bower_components/underscore-amd/underscore'
-    }
+    },
+    packages: [
+        { name: 'when', location: '../bower_components/when', main: 'when' }
+    ]
 })
 
 require(['conduct'], function (conduct) {
     var router,
         noop = function () {}
 
+    // console.profile('Router creation')
     router = conduct()
-    router.connect('/user/:number', noop)
+    // console.profileEnd('Router creation')
+    // router.connect('/user/:number', noop)
 
     // for (var i = 0; i < 10000; i++) {
         
-        router.resolve('/user/1234', [])
+        // router.resolve('/user/1234', [])
     // }
 })
