@@ -8,12 +8,15 @@ define([
 
 		SEED = 100,
 
-		testObj = conduct()
+		testObj;
+
+	
+	// testObj = conduct()	
 
 	benchmark('Register one route', function () {
 
 		when('using Conduct.js', function () {
-			testObj.connect('/user/edit/:number', noop)
+			conduct().connect('/user/edit/:number', noop)
 		})
 
 		when('using Sammy.js', function () {

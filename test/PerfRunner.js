@@ -17,7 +17,7 @@ requirejs.config({
 
 		'sammy': './bower_components/sammy/lib/min/sammy-latest.min',
 		'director': './bower_components/director/build/director.min',
-		'conduct': './dist/conduct',
+		// 'conduct': './dist/conduct',
 
 		'benchmark': './bower_components/benchmark/benchmark'
 	},
@@ -33,7 +33,7 @@ requirejs.config({
 
 	packages: [
 		{ name: 'when', location: 'bower_components/when', main: 'when' },
-		// { name: 'conduct', location: './lib', main: 'conduct' }
+		{ name: 'conduct', location: './lib', main: 'conduct' }
 	],
 
 	deps: ['benchmark', 'jquery'],
@@ -45,57 +45,73 @@ requirejs.config({
 			suites = [],
 			suiteSize = 0;
 
+		// set globals for Sammy.js
 		global.jQuery = jquery
 
+		/**
+		 * Create a new benchmarks suite.
+		 * 
+		 * @param  {String} groupName - name of the benchmark suite
+		 * @param  {Function} queueBenchmarks - callback that will contains benchmark calls
+		 */
 		global.benchmark = function (groupName, queueBenchmarks) {
-			currentSuite = new Benchmark.Suite()
+			currentSuite = new Benchmark.Suite(groupName)
 
 			suites.push(currentSuite)
 
-			currentSuite.groupName = groupName
-			currentSuite.benchmarks = []
-
 			currentSuite
-				.on('add', function(event) {
+				// .on('add', function(event) {
 					
-					var bench = event.target
+				// 	var bench = event.target
 
-					this.benchmarks.push(bench)
+				// 	this.benchmarks.push(bench)
 
-				}).on('cycle', function (event) {
+				// })
+				.on('cycle', function (event) {
 
 					var perf = event.target
 
-				}).on('complete', function () {
+				})
+				.on('complete', function () {
 					
 					var message = [],
-						fastest = Benchmark.filter(this.benchmarks, 'fastest'),
+						fastest = Benchmark.filter(this, 'fastest'),
 						result;
 
+					function not (bench) {
+						return function (test) {
+							return test.id !== bench.id
+						}
+					}
 					fastest = fastest[0]
 
+					message.push(Benchmark.pluck(this, 'name').join('\t| '))
+debugger
 					this
-						.filter(function (test) {
-							return test.id !== fastest.id
-						})
-						.forEach(function (test) {
+						// .filter(not(fastest))
+						.forEach(function (current) {
 
-							var timesFaster = (fastest.hz / test.hz);
+							Benchmark
+								.filter(this, not(current))
+								.forEach(function (test) {
 
-							message.push([
-								fastest.name,
-								'is',
-								Benchmark.formatNumber(timesFaster.toFixed(2))+'x',
-								'than',
-								test.name
-							].join(' '))
+									var timesFaster = (current.hz / test.hz);
+
+									message.push([
+										fastest.name,
+										'is',
+										Benchmark.formatNumber(timesFaster.toFixed(2))+'x',
+										'than',
+										test.name
+									].join(' '))
+								})
 						})
 
 
 					result = {
-						id: this.groupName,
-						description: message.join('\n'),
-						suite: [this.groupName],
+						id: this.name,
+						description: message.join('\n\t\t'),
+						suite: [this.name],
 						success: true,
 						skipped: false,
 						time: 0,
@@ -106,7 +122,7 @@ requirejs.config({
 
 
 					// console.log(this.filter('fastest'))
-					console.log('Fastest is ' + this.filter('fastest').pluck('name'))
+					// console.log('Fastest is ' + this.filter('fastest').pluck('name'))
 					
 					karma.complete({
 						coverage: global.__coverage__
@@ -122,8 +138,7 @@ requirejs.config({
 		}
 
 		global.when = function (scenarioName, benchmark) {
-			var bench = currentSuite.add(scenarioName, benchmark)
-			currentSuite.benchmarks.push(bench)
+			currentSuite.add(scenarioName, benchmark)
 		}
 
 		require(tests, function () {
