@@ -37,8 +37,13 @@ define([
 		it('should not match any other string', function () {
 			var params = []
 			expect( match('..5', params) ).to.be.false
-			expect( match('1bc', params) ).to.be.false
 			expect( match('abc', params) ).to.be.false
+		})
+
+		it('should match the initial number and return the target string reminder', function () {
+			var params = []
+			expect( match('1bc', params) ).to.equal('bc')
+			expect( params[0] ).to.equal(1)
 		})
 	})
 })

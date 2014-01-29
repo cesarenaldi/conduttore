@@ -39,7 +39,7 @@ define([
 			})
 		})
 
-		describe('when inserting a new list of nodes', function () {
+		describe('when inserting a new pattern', function () {
 
 			var ROOT = {
 					type: 'root-456',
@@ -66,9 +66,9 @@ define([
 
 				VALUE = 'value',
 
-				PATH_1 = [':type1', ':type2'],
+				PATTERN_1 = [':type1', ':type2'],
 
-				PATH_2 = [':type3', ':type4'],
+				// PATH_2 = [':type3', ':type4'],
 
 				nodeFactoryMock,
 
@@ -98,10 +98,10 @@ define([
 			})
 
 			it('should create a Node for each pattern updating the levels properly', function () {
-				testObj.insert(PATH_1, VALUE)
+				testObj.insert(PATTERN_1, VALUE)
 				expect(nodeFactoryMock.create).to.be.calledTwice
-				expect(nodeFactoryMock.create.firstCall.args[0]).to.equal(PATH_1[0])
-				expect(nodeFactoryMock.create.secondCall.args[0]).to.equal(PATH_1[1])
+				expect(nodeFactoryMock.create.firstCall.args[0]).to.equal(PATTERN_1[0])
+				expect(nodeFactoryMock.create.secondCall.args[0]).to.equal(PATTERN_1[1])
 				expect(node_2.value).to.equal(VALUE)
 				expect(root.levels).to.equal(2)
 				expect(node_1.levels).to.equal(1)
@@ -109,7 +109,7 @@ define([
 			})
 
 			it('should avoid duplication and re-use existing nodes', function () {
-				testObj.insert(PATH_1, 'anothervalue')
+				testObj.insert(PATTERN_1, 'anothervalue')
 				expect(nodeFactoryMock.create).to.not.be.called
 				expect(node_2.value).to.equal('anothervalue')
 			})
@@ -171,7 +171,10 @@ define([
 				testObj = createTree(nodeFactoryMock, TREE_DATA)
 
 			before(function () {
-				NODE_X.match.returns(true)
+				NODE_X.match.withArgs('xmatchzmatch').returns('zmatch')
+				NODE_X.match.withArgs('xmatch').returns(true)
+				NODE_Y.match.withArgs('ymatchpluto').returns('pluto')
+				NODE_Y.match.withArgs('ymatchanother').returns('another')
 				NODE_Y.match.withArgs('ymatch').returns(true)
 				NODE_Y.match.returns(false)
 				NODE_Z.match.returns(true)
@@ -185,28 +188,27 @@ define([
             
             it('should walk the tree', function () {
                 var params = [],
-                	tokens = ['xmatch', 'zmatch'],
-                	levels = _.rest(tokens).length
+                	path = 'xmatchzmatch'
 
-                testObj.search(tokens, params)
-                expect(NODE_Y.match).to.be.calledWith(tokens[0], params)
-                expect(NODE_X.match).to.be.calledWith(tokens[0], params)
-                expect(NODE_Z.match).to.be.calledWith(tokens[1], params)
+                testObj.search(path, params)
+                expect(NODE_Y.match).to.be.calledWith(path, params)
+                expect(NODE_X.match).to.be.calledWith(path, params)
+                expect(NODE_Z.match).to.be.calledWith('zmatch', params)
             })
 
-            it('should stop if there is no more tokens', function () {
+            it('should stop if there is no more path remainders', function () {
             	var params = [],
-            		tokens = ['xmatch']
+            		path = 'xmatch'
 
-            	testObj.search(tokens, params)
+            	testObj.search(path, params)
             	expect(NODE_Z.match).to.not.be.called
             })
 
-            it('should stop if there is no more nodes', function () {
+            it('should stop if there is no more nodes to walk through', function () {
 				var params = [],
-            		tokens = ['ymatch', 'pluto'],
+            		path = 'ymatchpluto',
 
-            		value = testObj.search(tokens, params)
+            		value = testObj.search(path, params)
 
             	expect(value).to.equal(undefined)	
             	expect(NODE_Y.match).to.be.called
@@ -216,13 +218,13 @@ define([
 
             	var value
 
-            	value = testObj.search(['topolino', 'pippo'], [])
+            	value = testObj.search('xmatchzmatch', [])
             	expect(value).to.equal(Z_VALUE)
 
-            	value = testObj.search(['ymatch'], [])
+            	value = testObj.search('ymatch', [])
 				expect(value).to.equal(Y_VALUE)
 
-				value = testObj.search(['ymatch', 'another'], [])
+				value = testObj.search('ymatchanother', [])
 				expect(value).to.equal(undefined)
             })
 		})

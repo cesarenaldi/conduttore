@@ -59,7 +59,7 @@ define([
 				result = node.match('pluto', [])
 				expect(result).to.be.true
 				expect(node.specificity).to.equal(NodeSpecificity.LOOSEST)
-			})	
+			})
 		})
 	})
 })
