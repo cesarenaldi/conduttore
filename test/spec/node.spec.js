@@ -1,30 +1,24 @@
 define([
-	'createNodeBuilder',
-	'specificity'
-], function (createNodeBuilder, NodeSpecificity) {
+	'node'
+], function (node) {
+
+	var createNode = node.create,
+		NodeSpecificity = node.Specificity
 	
-	describe('createNodeBuilder', function () {
+	describe('when creating a new node', function () {
 
 		it('should throw a TypeError when the matcher type is not supported', function () {
 			function testCase () {
-				createNodeBuilder('type1', true)
+				createNode('type1', true) // boolean is not a supported match type
 			}
 			expect(testCase).to.throw(TypeError)
 		})
 
-		it('should provide the match function as property of the builder function', function () {
-			var matchFun = function () {},
-				builder = createNodeBuilder(':custom', matchFun)
-
-			expect(builder)
-				.to.have.property('matcher')
-				.that.is.deep.equal(matchFun)
-		})
-
-		describe.skip('when a specificity is provided', function () {
+		describe('and a specificity is specified', function () {
 
 			it('should use that as node specificity', function () {
-				expect(false).to.be.true
+				var node = createNode('type1', function () {}, NodeSpecificity.TIGHT)
+				expect(node.specificity).to.equal(NodeSpecificity.TIGHT)
 			})
 		})
 
@@ -32,7 +26,7 @@ define([
 
 			it('should generate a reg exp based node factory using the array values', function () {
 
-				var node = createNodeBuilder(':array-type', ['work', 'home']).call(),
+				var node = createNode(':array-type', ['work', 'home']),
 					result;
 				
 				result = node.match('work', [])
@@ -45,7 +39,7 @@ define([
 			
 			it('should be used directly as matcher function of the node', function () {
 				var matcher = sinon.spy(),
-					node = createNodeBuilder(':func-type', matcher).call(),
+					node = createNode(':func-type', matcher),
 					TOKEN = 'token',
 					PARAMS = []
 
@@ -59,7 +53,7 @@ define([
 			
 			it('should create a regexp based node factory', function () {
 				var dummyRegExp = /pluto/,
-					node = createNodeBuilder(':regexp-type', dummyRegExp).call(),
+					node = createNode(':regexp-type', dummyRegExp),
 					result;
 				
 				result = node.match('pluto', [])

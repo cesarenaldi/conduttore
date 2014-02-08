@@ -1,28 +1,31 @@
-var Router = require('router-component'),
+var ComponentRouter = require('router-component'),
 	conduct = require('../lib/conduct'),
+	director = require('director'),
 
 	testObj = conduct(),
-	router = new Router,
-
-	SEED = 100
+	componentRouter = new ComponentRouter,
+	directorRouter = new director.http.Router
 
 
 function noop () {}
 
-function registerOneRoutesWithComponentRouter () {
-	for (var i = 0; i < 1000; i++ )
-		router.get('/user/'+ Math.random() * SEED +'/:id', noop)
+function registerOneRouteWithComponentRouter () {
+	componentRouter.get('/user/edit/:id', noop)
 }
 
-function registerOneRoutesWithConductRouter () {
-	for (var i = 0; i < 1000; i++ )
-		testObj.connect('/user/'+ Math.random() * SEED +'/:number', noop)
+function registerOneRouteWithConductRouter () {
+	testObj.connect('/user/edit/:number', noop)
+}
+
+function registerOneRouteWithDirectorRouter () {
+	directorRouter.get('/user/edit/:number', noop)
 }
 
 module.exports = {
 	name: 'Register one route',
 	tests: {
-		'with Component/Router': registerOneRoutesWithComponentRouter,
-		'with Conduct Router': registerOneRoutesWithConductRouter
+		'with Component/Router': registerOneRouteWithComponentRouter,
+		'with Conduct Router': registerOneRouteWithConductRouter,
+		'with Director Router': registerOneRouteWithDirectorRouter,
 	}
 }

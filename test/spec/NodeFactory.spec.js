@@ -1,63 +1,61 @@
 define([
-	'NodeFactory'
-], function (NodeFactory) {
+	'NodeFactory',
+	'node'
+], function (NodeFactory, node) {
 
 	var DUMMY_NODE = {},
-		TYPE = ':type';
+		TYPE = ':type',
 
-	var factoryStub = sinon.stub().returns(DUMMY_NODE),
-		builderStub = sinon.stub().returns(factoryStub),
-		dummyParam = function () {},
-		testObj = new NodeFactory(builderStub);
+		NodeSpecificity = node.Specificity,
+
+		nodeBuilderStub = sinon.stub().returns(DUMMY_NODE),
+		dummyMatcher = function () {},
+		testObj = new NodeFactory(nodeBuilderStub);
 		
 	describe('NodeFactory', function () {
 
-		beforeEach(function () {
-			factoryStub.reset()
-			builderStub.reset()
-		})
-
-		describe('when registering a new node factory function', function () {
-
-			it('should interact with the builder to create a new factory function', function () {
-				testObj.register(TYPE, dummyParam)
-				expect(builderStub).to.be.calledWith(TYPE, dummyParam)
-			})
-		})
+		beforeEach(function () {})
 
 		describe('when creating nodes', function () {
 
 			before(function () {
-				builderStub.reset()
+				testObj.register(TYPE, dummyMatcher)
 			})		
 
-			it('should invoke factory the corresponding factory function', function () {
-				testObj.create(TYPE)
-				expect( factoryStub ).to.be.calledOnce
-			})
+			it('should use the node builder passing the registered match function', function () {
 
-			it('should create an exact matching node when the requested type is not registered', function () {
-				var node = testObj.create('unknown', 'value')
+				var node = testObj.create(TYPE)
 
 				expect(node).to.equal(DUMMY_NODE)
-				expect(builderStub).to.be.calledWith('unknown', sinon.match.func, sinon.match.number)
+				expect( nodeBuilderStub ).to.be.calledWith(TYPE, dummyMatcher)
+			})
+
+			it('should use the node builder passing an exact match function and the highest specificity', function () {
+
+				var node = testObj.create('unknown')
+
+				expect(node).to.equal(DUMMY_NODE)
+				expect( nodeBuilderStub ).to.be.calledWith('unknown', sinon.match.func, NodeSpecificity.TIGHT)
 			})
 		})
 
 		describe('when registering an alias for an existing node factory', function () {
 
-			var factorySpy = sinon.spy(),
-				builderStub = sinon.stub().returns(factorySpy),
-				testObj = new NodeFactory(builderStub);
+			var matchFunction = function () {},
+				nodeBuilderStub = sinon.stub().returns(DUMMY_NODE),
+				testObj = new NodeFactory(nodeBuilderStub);
 
 			before(function () {
-				testObj.register(':original', function () {})
+				testObj.register(':original', matchFunction)
 				testObj.register(':alias_for_original', ':original')
 			})
 
 			it('should create the node using the factory for the aliased type', function () {
-				testObj.create(':alias_for_original')
-				expect(factorySpy).to.be.calledOnce;
+
+				var node = testObj.create(':alias_for_original')
+
+				expect(nodeBuilderStub).to.be.calledWith(':alias_for_original', matchFunction);
+				expect(node).to.equal(DUMMY_NODE)
 			})
 		})
 
@@ -67,30 +65,40 @@ define([
 				var node = testObj.createRoot()
 				
 				expect(node).to.equal(DUMMY_NODE)
-				expect(factoryStub).to.be.calledOnce
+				expect(nodeBuilderStub).to.be.calledWith(sinon.match.string, sinon.match.func)
 			})
 		})
 
 		describe('when restoring a node', function () {
 
-			var factorySpy = sinon.spy(),
-				builderStub = sinon.stub().returns(factorySpy),
-				testObj = new NodeFactory(builderStub),
+			var matchFunction = function () {},
+				nodeBuilderStub = sinon.stub().returns(DUMMY_NODE),
+				testObj = new NodeFactory(nodeBuilderStub),
 
 				nodeToRestore = {
 					type: ':type'
+				},
+
+				anotherNodeToRestore = {
+					type: '/part1'
 				}
 
 			before(function () {
-				factorySpy.matcher = function () {}
-				testObj.register(':type', function () {})
+				testObj.register(':type', matchFunction)
 			})
 
 			it('should re-assing the proper match function', function () {
 				testObj.restore(nodeToRestore)
 				expect(nodeToRestore)
 					.to.have.property('match')
-					.that.is.deep.equal(factorySpy.matcher)
+					.that.is.deep.equal(matchFunction)
+			})
+
+			it('should re-assing the proper match function', function () {
+				testObj.restore(anotherNodeToRestore)
+				expect(anotherNodeToRestore)
+					.to.have.property('match')
+					.that.is.an.instanceOf(Function)
 			})
 		})
 	})

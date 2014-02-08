@@ -6,6 +6,8 @@ module.exports = function (grunt) {
 
 	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
 
+	var _ = require('underscore')
+
 	grunt.initConfig({
 
 		file: grunt.option('file') ? grunt.option('file') : '**/*',
@@ -156,6 +158,11 @@ module.exports = function (grunt) {
 			all: {
 				src: ['benchmarks/*.js'],
 				dest: 'benchmarks/results.csv'
+			},
+
+			single: {
+				src: ['benchmarks/<%= file %>.js'],
+				dest: '/tmp/benchmarks/' + _.uniqueId('results') + '.csv'
 			}
 		}
 	})
