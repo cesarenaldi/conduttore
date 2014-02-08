@@ -21,11 +21,11 @@ module.exports = function(config) {
             included: false
         },
         {
-            pattern: 'lib/{,**/}*.js',
+            pattern: 'lib/**/*.js',
             included: false
         },
         {
-            pattern: 'test/libs/{,**/}*.js',
+            pattern: 'test/libs/**/*.js',
             included: false
         },
     
