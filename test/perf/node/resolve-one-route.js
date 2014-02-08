@@ -1,5 +1,5 @@
 var Router = require('router-component'),
-	conduct = require('../dist/conduct'),
+	conduct = require('../../../lib/conduct'),
 
 	testObj = conduct(),
 	router = new Router;

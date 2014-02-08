@@ -19,10 +19,13 @@ module.exports = function (grunt) {
 					name: 'conduct',
 					out: './dist/conduct.js',
 					almond: true,
-					wrap: true,
-					optimize: 'none',
+					wrap: {
+						startFile: 'parts/start.frag',
+						endFile: 'parts/end.frag'
+					},
+					optimize: 'uglify2',
 					skipSemiColonInsertion: true,
-					preserveLicenseComments: false,
+					preserveLicenseComments: true,
 					paths: {},
 					exclude: [
 						'when'
@@ -153,13 +156,13 @@ module.exports = function (grunt) {
 			},
 
 			all: {
-				src: ['benchmarks/*.js'],
-				dest: 'benchmarks/results.csv'
+				src: ['test/perf/node/*.js'],
+				dest: 'test/perf/node/results.csv'
 			},
 
 			single: {
-				src: ['benchmarks/<%= file %>.js'],
-				dest: '/tmp/benchmarks/' + _.uniqueId('results') + '.csv'
+				src: ['test/perf/node/<%= file %>.js'],
+				dest: '/tmp/benchmarks/node/' + _.uniqueId('results') + '.csv'
 			}
 		}
 	})
