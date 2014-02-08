@@ -1,5 +1,5 @@
 var ComponentRouter = require('router-component'),
-	conduct = require('../lib/conduct'),
+	conduct = require('../dist/conduct'),
 	director = require('director'),
 
 	testObj = conduct(),

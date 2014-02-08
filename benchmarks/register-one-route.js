@@ -1,5 +1,5 @@
 var ComponentRouter = require('router-component'),
-	conduct = require('../lib/conduct'),
+	conduct = require('../dist/conduct'),
 	director = require('director'),
 
 	testObj = conduct(),
@@ -26,6 +26,6 @@ module.exports = {
 	tests: {
 		'with Component/Router': registerOneRouteWithComponentRouter,
 		'with Conduct Router': registerOneRouteWithConductRouter,
-		'with Director Router': registerOneRouteWithDirectorRouter,
+		'with Director Router': registerOneRouteWithDirectorRouter
 	}
 }

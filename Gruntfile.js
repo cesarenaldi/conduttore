@@ -20,14 +20,11 @@ module.exports = function (grunt) {
 					out: './dist/conduct.js',
 					almond: true,
 					wrap: true,
-					optimize: 'uglify2',
+					optimize: 'none',
 					skipSemiColonInsertion: true,
 					preserveLicenseComments: false,
-					paths: {
-						'underscore': '../bower_components/underscore-amd/underscore'
-					},
+					paths: {},
 					exclude: [
-						'underscore',
 						'when'
 					],
 					packages: [
@@ -168,6 +165,7 @@ module.exports = function (grunt) {
 	})
 
 	grunt.registerTask('test', ['karma:continuous'])
+	grunt.registerTask('perf', ['build', 'benchmark:all'])
 	grunt.registerTask('build', ['requirejs:dist'])
 	grunt.registerTask('default', ['test', 'build'])
 
