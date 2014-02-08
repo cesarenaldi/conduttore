@@ -33,7 +33,7 @@ requirejs.config({
 
 	packages: [
 		{ name: 'when', location: 'bower_components/when', main: 'when' },
-		{ name: 'conduct', location: './lib', main: 'conduct' }
+		{ name: 'conduttore', location: './lib', main: 'conduttore' }
 	],
 
 	deps: ['benchmark', 'jquery'],

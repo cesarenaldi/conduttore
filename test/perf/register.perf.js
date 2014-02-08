@@ -1,8 +1,8 @@
 define([
-	'conduct',
+	'conduttore',
 	'sammy',
 	'director'
-], function (conduct, Sammy, Router) {
+], function (conduttore, Sammy, Router) {
 
 	var noop = function () {},
 
@@ -10,13 +10,11 @@ define([
 
 		testObj;
 
-	
-	// testObj = conduct()	
 
 	benchmark('Register one route', function () {
 
-		when('using Conduct.js', function () {
-			conduct().connect('/user/edit/:number', noop)
+		when('using Conduttore.js', function () {
+			conduttore().connect('/user/edit/:number', noop)
 		})
 
 		when('using Sammy.js', function () {

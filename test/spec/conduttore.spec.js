@@ -1,14 +1,14 @@
 define([
-	'conduct',
+	'conduttore',
 	'fixtures/routes'
-], function (conduct, config) {
+], function (conduttore, config) {
 
 
-	describe('conduct', function () {
+	describe('conduttore', function () {
 		
 		it('should be used also as AMD loader plugin', function (done) {
 			
-			require(['conduct!fixtures/routes'], function (router) {
+			require(['conduttore!fixtures/routes'], function (router) {
 				expect(router).to.have.property('resolve')
 				expect(router).to.have.property('dispatch')
 				expect(router).to.have.property('connect')

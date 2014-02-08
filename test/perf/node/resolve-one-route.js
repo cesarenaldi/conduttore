@@ -1,7 +1,7 @@
 var Router = require('router-component'),
-	conduct = require('../../../lib/conduct'),
+	conduttore = require('../../../lib/conduttore'),
 
-	testObj = conduct(),
+	testObj = conduttore(),
 	router = new Router;
 
 function noop () {}

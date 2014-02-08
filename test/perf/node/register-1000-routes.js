@@ -1,8 +1,8 @@
 var ComponentRouter = require('router-component'),
-	conduct = require('../../../lib/conduct'),
+	conduttore = require('../../../lib/conduttore'),
 	director = require('director'),
 
-	testObj = conduct(),
+	testObj = conduttore(),
 	componentRouter = new ComponentRouter,
 	directorRouter = new director.http.Router
 

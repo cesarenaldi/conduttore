@@ -16,8 +16,8 @@ module.exports = function (grunt) {
 			dist: {
 				options: {
 					baseUrl: './lib',
-					name: 'conduct',
-					out: './dist/conduct.js',
+					name: 'conduttore',
+					out: './dist/conduttore.js',
 					almond: true,
 					wrap: {
 						startFile: 'parts/start.frag',
@@ -48,7 +48,7 @@ module.exports = function (grunt) {
 			test: {
 				options: {
 					baseUrl: './',
-					name: 'conduct!test/fixtures/pre-build-routes',
+					name: 'conduttore!test/fixtures/pre-build-routes',
 					out: '.tmp/routes.js',
 					optimize: 'none',
 					paths: {
@@ -56,7 +56,7 @@ module.exports = function (grunt) {
 					},
 					exclude: [
 						'underscore',
-						'conduct'
+						'conduttore'
 					],
 					packages: [
 						{ 
@@ -65,9 +65,9 @@ module.exports = function (grunt) {
 							main: 'when'
 						},
 						{
-							name: 'conduct',
+							name: 'conduttore',
 							location: 'lib/',
-							main: 'conduct.js'
+							main: 'conduttore.js'
 						}
 					]
 				}
