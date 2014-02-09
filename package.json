@@ -27,7 +27,11 @@
     "grunt-benchmark": "~0.2.0",
     "router-component": "git://github.com/component/router",
     "grunt-requirejs": "~0.4.0",
-    "director": "~1.2.2"
+    "director": "~1.2.2",
+    "grunt-mocha-test": "~0.9.0",
+    "express": "~3.4.8",
+    "sinon": "~1.8.1",
+    "supertest": "~0.9.0"
   },
   "engines": {
     "node": ">=0.8.0"

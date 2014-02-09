@@ -150,6 +150,17 @@ module.exports = function (grunt) {
 			}
 		},
 
+		mochaTest: {
+			options: {
+				reporter: 'spec'
+			},
+			integration: {
+				src:[
+					'test/integration/*.spec.js'
+				]
+			}
+		},
+
 		benchmark: {
 			options: {
 				displayResults: true
