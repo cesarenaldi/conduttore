@@ -19,7 +19,8 @@ requirejs.config({
 
         'fixtures': '../test/fixtures',
 
-        'underscore': '../bower_components/underscore-amd/underscore'
+        'underscore': '../bower_components/underscore-amd/underscore',
+        'es5-shim': '../bower_components/es5-shim'
     },
 
     shim: {
@@ -39,7 +40,7 @@ requirejs.config({
         disableI18n: true
     },
 
-    deps: ['chai', 'sinon', 'sinon-chai'],
+    deps: ['chai', 'sinon', 'sinon-chai', 'es5-shim/es5-shim'],
 
     // start test run, once Require.js is done
     callback: function(chai, sinon, sinonChai) {
