@@ -5,7 +5,8 @@
   "main": "./lib/index.js",
   "keywords": [
     "router",
-    "client side"
+    "client side",
+    "isomorphic"
   ],
   "devDependencies": {
     "grunt": "~0.4.1",

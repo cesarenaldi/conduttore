@@ -1,33 +1,22 @@
 # [Conduttore] [![Build Status](https://secure.travis-ci.org/cesarenaldi/conduttore.png?branch=master)](http://travis-ci.org/cesarenaldi/conduttore)
 
-# Motivations
-
-
-
-# Features
+## Features
 
 * Fast, very fast!!
 * Multipurpose
-** Environment agnostic - isomorphic implementation
-** Purpose agnostic (i.e. not just for URLs routing)
-* Automatic route parameter retrieval and type coercion
-* Compatible routes notation
-* Pluggable
-
-# Getting started
+	* Environment agnostic - isomorphic implementation
+	* Purpose agnostic (i.e. not just for URLs routing)
+* Automatic route parameters retrieval and type coercion
 
 ## Installation
+
 Using NPM with:
 `npm install git://github.com/cesarenaldi/conduttore.git`
+
 Using bower.js:
 `bower install git://github.com/cesarenaldi/conduttore.git`
 
-## Using conduttore.js
-
-### As a module
-### As an AMD plugin
-
-###
+## Example
 
 ```javascript
 var conduttore = require('conduttore')
@@ -56,8 +45,8 @@ router.resolve('/users/edit/topolino')
 // or invoke the route handler
 router
 	.dispatch('/users/edit/topolino')
-	.then(function (controller, action, type) {
-
+	.then(function (handlerResult) {
+		// your post processing logic goes here
 	})
 
 ```
