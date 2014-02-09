@@ -1,4 +1,4 @@
-# Conduttore [![Build Status](https://secure.travis-ci.org/cesarenaldi/conduttore.png?branch=master)](http://travis-ci.org/cesarenaldi/conduttore)
+# Conduttore [![Build Status](https://travis-ci.org/cesarenaldi/conduttore.png?branch=master)](https://travis-ci.org/cesarenaldi/conduttore)
 
 ## Features
 
