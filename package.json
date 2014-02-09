@@ -2,7 +2,7 @@
   "name": "conduttore",
   "description": "A multi-purpose Router",
   "version": "0.1.0",
-  "main": "./lib/index.js",
+  "main": "./lib/conducttore.js",
   "keywords": [
     "router",
     "client side",
