@@ -181,6 +181,6 @@ module.exports = function (grunt) {
 	grunt.registerTask('test', ['karma:continuous'])
 	grunt.registerTask('perf', ['build', 'benchmark:all'])
 	grunt.registerTask('build', ['requirejs:dist'])
-	grunt.registerTask('default', ['test', 'build'])
+	grunt.registerTask('default', ['test'])
 
 }
