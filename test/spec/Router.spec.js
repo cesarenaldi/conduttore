@@ -1,7 +1,7 @@
 define([
 	'Router',
 	'fixtures/route-handler'
-], function (Router, routeHandler) {
+], function (Router, extModuleRouteHandler) {
 
 
 	describe('Router', function () {
@@ -310,10 +310,28 @@ define([
 				})
 			})
 			
-			describe.skip('and the value is a function', function () {
+			describe('and the value is a function', function () {
+
+				var	returnedValue = 'the processed value',
+					routeHandler = sinon.stub().returns(returnedValue),
+					testObj = new Router()
+
+				before(function () {
+					testObj.connect(ROUTE, routeHandler)
+				})
 
 				it('should invoke the function passing the parameters collected', function () {
-					expect(false).to.be.true
+					testObj.dispatch(PATH)
+					expect(routeHandler).to.be.calledWith(EXPECTED_PARAM)
+				})
+
+				it('should return the function result as promise resolved value', function (done) {
+					testObj
+						.dispatch(PATH)
+						.then(function (arg0) {
+							expect(arg0).to.deep.equal(returnedValue)
+							done()
+						})
 				})
 			})
 
@@ -325,7 +343,7 @@ define([
 				it('should try to load the corresponding module and invoke the function', function (done) {
 					testObj.connect(ROUTE, EXISTING_MODULE)
 					testObj.dispatch(PATH).then(function () {
-						expect(routeHandler).to.be.calledWith(EXPECTED_PARAM)
+						expect(extModuleRouteHandler).to.be.calledWith(EXPECTED_PARAM)
 						done()
 					}, done)
 				})
