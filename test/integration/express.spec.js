@@ -22,6 +22,9 @@ function middleware (req, res, next){
 		.then(function (ret) {
 			res.send(ret)
 			next()
+		}, function () {
+			res
+			next()
 		})
 }
 
@@ -39,5 +42,11 @@ describe('conduttore', function () {
 		request(app)
 			.get('/users/edit/332')
 			.expect('dunno', done)
+	})
+
+	it('should do something', function (done) {
+		request(app)
+			.get('/users/add')
+			.expect(404, done)
 	})
 })
