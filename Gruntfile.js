@@ -112,6 +112,7 @@ module.exports = function (grunt) {
 			},
 
 			continuous: {
+				reporters: 'spec',
 				singleRun: true,
 				browsers: ['PhantomJS']
 			},
@@ -178,7 +179,7 @@ module.exports = function (grunt) {
 		}
 	})
 
-	grunt.registerTask('test', ['karma:continuous'])
+	grunt.registerTask('test', ['karma:continuous', 'mochaTest:integration'])
 	grunt.registerTask('perf', ['build', 'benchmark:all'])
 	grunt.registerTask('build', ['requirejs:dist'])
 	grunt.registerTask('default', ['test'])

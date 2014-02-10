@@ -21,14 +21,12 @@ function middleware (req, res, next){
 		.dispatch(url)
 		.then(function (ret) {
 			res.send(ret)
-			next()
 		}, function () {
-			res
-			next()
+			res.send(404, 'Sorry cant find that!')
 		})
 }
 
-describe('conduttore', function () {
+describe('conduttore + express.js', function () {
 
 	before(function () {
 		app = express()
@@ -38,15 +36,15 @@ describe('conduttore', function () {
 		})
 	})
 	
-	it('should do something', function (done) {
+	it('should dispatch the path to the route handler and return the result', function (done) {
 		request(app)
 			.get('/users/edit/332')
 			.expect('dunno', done)
 	})
 
-	it('should do something', function (done) {
+	it('should return 404 if the path does not match any routes', function (done) {
 		request(app)
-			.get('/users/add')
-			.expect(404, done)
+			.get('/not-exists')
+			.expect(404	, done)
 	})
 })
