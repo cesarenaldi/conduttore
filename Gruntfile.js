@@ -1,7 +1,5 @@
 'use strict';
 
-var path = require('path')
-
 module.exports = function (grunt) {
 
 	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
@@ -176,10 +174,34 @@ module.exports = function (grunt) {
 				src: ['test/perf/node/<%= file %>.js'],
 				dest: '/tmp/benchmarks/node/' + _.uniqueId('results') + '.csv'
 			}
+		},
+
+		jshint: {
+			gruntfile: {
+				options: {
+					jshintrc: '.jshintrc'
+				},
+				src: 'Gruntfile.js'
+			},
+			lib: {
+				options: {
+					jshintrc: 'lib/.jshintrc'
+				},
+				src: [
+					'lib/**/*.js',
+					'!lib/vendor/**/*.js'
+				]
+			},
+			test: {
+				options: {
+					jshintrc: 'test/.jshintrc'
+				},
+				src: ['test/**/*.js']
+			}
 		}
 	})
 
-	grunt.registerTask('test', ['karma:continuous', 'mochaTest:integration'])
+	grunt.registerTask('test', ['jshint:gruntfile', 'jshint:lib', 'karma:continuous', 'mochaTest:integration'])
 	grunt.registerTask('perf', ['build', 'benchmark:all'])
 	grunt.registerTask('build', ['requirejs:dist'])
 	grunt.registerTask('default', ['test'])
