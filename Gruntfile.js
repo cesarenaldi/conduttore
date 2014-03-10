@@ -4,7 +4,8 @@ module.exports = function (grunt) {
 
 	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
 
-	var _ = require('underscore')
+	var _ = require('underscore'),
+		regenerator = require('regenerator')
 
 	grunt.initConfig({
 
@@ -21,7 +22,7 @@ module.exports = function (grunt) {
 						startFile: 'parts/start.frag',
 						endFile: 'parts/end.frag'
 					},
-					optimize: 'uglify2',
+					optimize: 'none',
 					skipSemiColonInsertion: true,
 					preserveLicenseComments: true,
 					paths: {},
@@ -35,6 +36,13 @@ module.exports = function (grunt) {
 							main: 'when'
 						}
 					],
+					onBuildRead: function (moduleName, path, contents) {
+						if (moduleName === 'tree') {
+							contents = regenerator(contents)
+							console.log(contents)
+						}
+						return contents
+					},
 					onBuildWrite: function (moduleName, path, contents) {
 						return contents
 							.replace("(function(define){ 'use strict';", '')

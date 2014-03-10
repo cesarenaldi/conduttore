@@ -116,10 +116,12 @@ define([
 		})
 
 		describe('when searching a token list', function () {
-            
-            var Z_VALUE = function () {},
+			
+			var X_VALUE = function (x) {},
 
-            	Y_VALUE = function () {},
+				Y_VALUE = function (y) {},
+
+				Z_VALUE = function (z) {},
 
 				NODE_Z = {
 					type: 'leaf',
@@ -135,6 +137,7 @@ define([
 						'leaf': NODE_Z
 					},
 					match: sinon.stub(),
+					value: X_VALUE,
 					children: [
 						[], [ NODE_Z ], []
 					]
@@ -172,9 +175,8 @@ define([
 
 			before(function () {
 				NODE_X.match.returns(true)
-				NODE_Y.match.withArgs('ymatch').returns(true)
-				NODE_Y.match.returns(false)
 				NODE_Z.match.returns(true)
+				NODE_Y.match.returns(true)
 			})
 
 			beforeEach(function () {
@@ -182,49 +184,172 @@ define([
 				NODE_Y.match.reset()
 				NODE_Z.match.reset()
 			})
-            
-            it('should walk the tree', function () {
-                var params = [],
-                	tokens = ['xmatch', 'zmatch'],
-                	levels = _.rest(tokens).length
-
-                testObj.search(tokens, params)
-                expect(NODE_Y.match).to.be.calledWith(tokens[0], params)
-                expect(NODE_X.match).to.be.calledWith(tokens[0], params)
-                expect(NODE_Z.match).to.be.calledWith(tokens[1], params)
-            })
-
-            it('should stop if there is no more tokens', function () {
-            	var params = [],
-            		tokens = ['xmatch']
-
-            	testObj.search(tokens, params)
-            	expect(NODE_Z.match).to.not.be.called
-            })
-
-            it('should stop if there is no more nodes', function () {
+			
+			it.skip('should walk the tree', function () {
 				var params = [],
-            		tokens = ['ymatch', 'pluto'],
+					tokens = ['xmatch', 'zmatch'],
+					levels = _.rest(tokens).length
 
-            		value = testObj.search(tokens, params)
+				testObj.search(tokens, params)
+				expect(NODE_Y.match).to.be.calledWith(tokens[0], params)
+				expect(NODE_X.match).to.be.calledWith(tokens[0], params)
+				expect(NODE_Z.match).to.be.calledWith(tokens[1], params)
+			})
 
-            	expect(value).to.equal(undefined)	
-            	expect(NODE_Y.match).to.be.called
-            })
+			it.skip('should stop if there is no more tokens', function () {
+				var params = [],
+					tokens = ['xmatch']
 
-            it('should return the value of the found node', function () {
+				testObj.search(tokens, params)
+				expect(NODE_Z.match).to.not.be.called
+			})
 
-            	var value
+			 it('should return an iterator-like object', function () {
+				var iter,
+					iterResultObj
 
-            	value = testObj.search(['topolino', 'pippo'], [])
-            	expect(value).to.equal(Z_VALUE)
+				iter = testObj.search(['topolino', 'pippo'], [])
+				iterResultObj = iter.next()
 
-            	value = testObj.search(['ymatch'], [])
-				expect(value).to.equal(Y_VALUE)
+				expect(iter)
+					.to.respondTo('next')
+				expect(iterResultObj)
+					.to.contain.keys('done', 'value')
+			})
 
-				value = testObj.search(['ymatch', 'another'], [])
-				expect(value).to.equal(undefined)
-            })
+			it('should return the found node value as value of the iterator result object', function () {
+
+				var iter, iterResultObj
+
+				iter = testObj.search(['topolino', 'pippo'], [])
+				iterResultObj = iter.next()
+
+				expect(iterResultObj)
+					.to.deep.equal({
+						value: Z_VALUE,
+						done: false
+					})
+			})
+
+			describe('and iterating through the searches', function () {
+
+				it('should return the first search result', function () {
+					var iter, iterResultObj
+
+					iter = testObj.search(['topolino'], [])
+
+					iterResultObj = iter.next()
+
+					expect(iterResultObj)
+						.to.deep.equal({
+							done: false,
+							value: Y_VALUE
+						})
+				})
+
+				it('should stop the iteration at the second iter#next call', function () {
+
+				 	var iter, iterResultObj
+
+					iter = testObj.search(['topolino'], [])
+
+					iterResultObj = iter.next()
+					iterResultObj = iter.next()
+
+					expect(iterResultObj)
+						.to.deep.equal({
+							done: false,
+							value: undefined
+						})
+				 })
+			})
+
+			describe('and invoking next thrice on the iterator object', function () {
+				 it('should stop the search', function () {
+
+				 	var iter, iterResultObj
+
+					iter = testObj.search(['topolino', 'pippo'], [])
+					iterResultObj = iter.next()
+					iterResultObj = iter.next()
+					iterResultObj = iter.next()
+
+					expect(iterResultObj)
+						.to.have.property('done', true)
+						.and.to.not.have.property('value')
+				 })
+			})
+
+			describe('and the search list is longer than the node levels', function () {
+				 it('should stop the search', function () {
+
+					var iter = testObj.search(['ymatch', 'pluto'], []),
+						iterResultObj = iter.next()
+
+					expect(iterResultObj)
+						.to.have.property('done', true)
+						.and.to.not.have.property('value')
+				})
+			})
+		})
+
+		describe('when continuing a search', function () {
+
+			var X_VALUE = function () {},
+				Y_VALUE = function () {},
+
+				NODE_X = {
+					type: 'node_x',
+					lookup: {},
+					match: sinon.stub().returns(true),
+					children: [
+						[], [], []
+					],
+					value: X_VALUE
+				},
+
+				NODE_Y = {
+					type: 'node_y',
+					lookup: {},
+					match: sinon.stub().returns(true),
+					children: [
+						[], [], []
+					],
+					value: Y_VALUE
+				},
+
+				TREE_DATA = {
+					type: 'root-123',
+					lookup: {
+						'node_x': NODE_X,
+						'node_y': NODE_Y
+					},
+					match: function () {},
+					children: [
+						[ NODE_X ], [ NODE_Y ], []
+					]
+				},
+		
+				nodeFactoryMock = {},
+
+				testObj = createTree(nodeFactoryMock, TREE_DATA)
+
+			it('should raise an error if no previous search', function () {
+				function testCase () {
+					testObj.continue()
+				}
+
+				expect(testCase).to.throw(Error)
+			})
+
+			it('should continue the previous search considering the previous found node as not valid', function () {
+
+				var value = testObj.search('/matching/path')
+
+				expect(value).to.deep.equal(X_VALUE)
+				value = testObj.continue()
+				expect(value).to.deep.equal(Y_VALUE)
+			})
 		})
 
 		describe('when exporting/importing the tree structure', function () {
