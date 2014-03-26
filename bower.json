@@ -1,7 +1,7 @@
 {
   "name": "conduttore",
   "description": "A multi-purpose Router",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./lib/conduttore.js",
   "dependencies": {
     "when": "~2.7.0"
@@ -15,6 +15,5 @@
     "jquery": "~2.0.3",
     "director": "~1.2.1",
     "es5-shim": "~2.3.0"
-  },
-  "directory": "components"
+  }
 }

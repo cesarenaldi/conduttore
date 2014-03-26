@@ -11,10 +11,10 @@
 ## Installation
 
 Using NPM with:
-`npm install git://github.com/cesarenaldi/conduttore.git`
+`npm install conduttore`
 
 Using bower.js:
-`bower install git://github.com/cesarenaldi/conduttore.git`
+`bower install conduttore`
 
 ## Example
 
