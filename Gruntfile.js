@@ -10,6 +10,20 @@ module.exports = function (grunt) {
 
 		file: grunt.option('file') ? grunt.option('file') : '**/*',
 
+		browserify: {
+			options: {
+				standalone: 'conduttore',
+				fullPaths: true,
+				detectGlobals: false,
+				ignore: ['when']
+			},
+			dist: {
+				files: {
+					'dist/conduttore.js': 'lib/conduttore.js'
+				}
+			}
+		},
+
 		requirejs: {
 			dist: {
 				options: {
