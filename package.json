@@ -1,14 +1,10 @@
 {
   "name": "conduttore",
   "description": "A multi-purpose Router",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./lib/conducttore.js",
   "homepage": "https://github.com/cesarenaldi/conduttore",
-  "author": {
-    "name": "Cesare Naldi",
-    "email": "naldi.cesare@gmail.com",
-    "url": "https://github.com/cesarenaldi"
-  },
+  "author": "Cesare Naldi <naldi.cesare@gmail.com> (https://github.com/cesarenaldi)",
   "repository": {
     "type": "git",
     "url": "https://github.com/cesarenaldi/conduttore.git"
@@ -58,5 +54,12 @@
     "underscore": "~1.5.2",
     "when": "~2.7.0",
     "recast": "~0.5.4"
-  }
+  },
+  "readmeFilename": "README.md",
+  "gitHead": "53aa112e0c9663397f4436decf9c6c2284ddf3bf",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "license": "BSD"
 }
