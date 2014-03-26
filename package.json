@@ -1,7 +1,7 @@
 {
   "name": "conduttore",
   "description": "A multi-purpose Router",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./lib/conducttore.js",
   "homepage": "https://github.com/cesarenaldi/conduttore",
   "author": {
