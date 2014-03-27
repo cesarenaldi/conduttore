@@ -56,5 +56,5 @@
     "doc": "docs",
     "test": "test"
   },
-  "license": "BSD"
+  "license": "MIT"
 }
