@@ -17,7 +17,7 @@ requirejs.config({
 
 		'sammy': './bower_components/sammy/lib/min/sammy-latest.min',
 		'director': './bower_components/director/build/director.min',
-		// 'conduct': './dist/conduct',
+		'conduttore': './dist/conduttore',
 
 		'benchmark': './bower_components/benchmark/benchmark'
 	},
@@ -32,8 +32,7 @@ requirejs.config({
 	},
 
 	packages: [
-		{ name: 'when', location: 'bower_components/when', main: 'when' },
-		{ name: 'conduttore', location: './lib', main: 'conduttore' }
+		{ name: 'when', location: 'bower_components/when', main: 'when' }
 	],
 
 	deps: ['benchmark', 'jquery'],

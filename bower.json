@@ -2,7 +2,7 @@
   "name": "conduttore",
   "description": "A multi-purpose Router",
   "version": "0.1.3",
-  "main": "./lib/conduttore.js",
+  "main": "./dist/conduttore.js",
   "dependencies": {
     "when": "~2.7.0"
   },

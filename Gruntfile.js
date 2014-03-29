@@ -220,10 +220,14 @@ module.exports = function (grunt) {
 				updateConfigs: [],
 				commit: true,
 				commitMessage: 'Release v%VERSION%',
-				commitFiles: ['package.json', 'dist/conduttore.js'], // '-a' for all files
+				commitFiles: [
+					'package.json',
+					'bower.json',
+					'dist/*'
+				], // '-a' for all files
 				createTag: true,
 				tagName: '%VERSION%',
-				tagMessage: 'Version %VERSION%',
+				tagMessage: 'v%VERSION%',
 				push: true,
 				pushTo: 'upstream',
 				gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
@@ -233,7 +237,10 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test', ['jshint:gruntfile', 'jshint:lib', 'karma:continuous', 'mochaTest:integration'])
 	grunt.registerTask('perf', ['build', 'benchmark:all'])
-	grunt.registerTask('build', ['requirejs:dist'])
+	grunt.registerTask('build', ['browserify'])
+	grunt.registerTask('release', function (target) {
+		grunt.task.run(['build', 'bump-only:' + target])
+	})
 	grunt.registerTask('default', ['test'])
 
 }
