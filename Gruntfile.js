@@ -220,26 +220,33 @@ module.exports = function (grunt) {
 				updateConfigs: [],
 				commit: true,
 				commitMessage: 'Release v%VERSION%',
-				commitFiles: [
-					'package.json',
-					'bower.json',
-					'dist/*'
-				], // '-a' for all files
+				commitFiles: ['-a'],
 				createTag: true,
 				tagName: '%VERSION%',
 				tagMessage: 'v%VERSION%',
-				push: true,
+				push: false,
 				pushTo: 'upstream',
 				gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
 			}
+		},
+		'git-add': {
+			options: {
+				files: [
+					'package.json',
+					'bower.json',
+					'dist/*'
+				]
+			}
 		}
 	})
+
+	grunt.loadTasks('grunt/tasks')
 
 	grunt.registerTask('test', ['jshint:gruntfile', 'jshint:lib', 'karma:continuous', 'mochaTest:integration'])
 	grunt.registerTask('perf', ['build', 'benchmark:all'])
 	grunt.registerTask('build', ['browserify'])
 	grunt.registerTask('release', function (target) {
-		grunt.task.run(['build', 'bump-only:' + target])
+		grunt.task.run(['build', 'bump-only:' + target, 'git-add', 'bump-commit'])
 	})
 	grunt.registerTask('default', ['test'])
 
