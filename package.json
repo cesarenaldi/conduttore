@@ -1,7 +1,7 @@
 {
   "name": "conduttore",
   "description": "A multi-purpose Router",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "main": "./lib/conduttore.js",
   "homepage": "https://github.com/cesarenaldi/conduttore",
   "author": "Cesare Naldi <naldi.cesare@gmail.com> (https://github.com/cesarenaldi)",
@@ -46,7 +46,7 @@
     "requirejs": "~2.1.9",
     "esprima": "~1.0.4",
     "underscore": "~1.5.2",
-    "when": "~2.7.0",
+    "when": "~2.7.1",
     "recast": "~0.5.4"
   },
   "readmeFilename": "README.md",
